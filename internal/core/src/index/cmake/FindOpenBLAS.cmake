@@ -17,6 +17,7 @@ else()
             /usr/local/opt/openblas/include
             $ENV{OpenBLAS_HOME}
             $ENV{OpenBLAS_HOME}/include
+            $ENV{OpenBLAS_HOME}/include/OpenBLAS
             )
 
     set(OpenBLAS_LIB_SEARCH_PATHS
@@ -69,7 +70,7 @@ else()
     if (OpenBLAS_FOUND)
         set(FOUND_OPENBLAS "true" PARENT_SCOPE)
         set(OpenBLAS_LIBRARIES ${OpenBLAS_LIB})
-        STRING(REGEX REPLACE "/libopenblas.so" "" OpenBLAS_LIB_DIR ${OpenBLAS_LIBRARIES})
+	STRING(REGEX REPLACE "/libopenblas.(so|dll).*" "" OpenBLAS_LIB_DIR ${OpenBLAS_LIBRARIES})
         message(STATUS "find OpenBLAS libraries:${OpenBLAS_LIBRARIES} ")
         if (Lapacke_LIB)
             set(OpenBLAS_LIBRARIES ${OpenBLAS_LIBRARIES} ${Lapacke_LIB})
