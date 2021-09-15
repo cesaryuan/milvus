@@ -178,9 +178,9 @@ func newSegment(collection *Collection, segmentID UniqueID, partitionID UniqueID
 		log.Warn("illegal segment type when create segment")
 		return nil
 	case segmentTypeSealed:
-		segmentPtr = C.NewSegment(collection.collectionPtr, C.ulong(segmentID), C.Sealed)
+		segmentPtr = C.NewSegment(collection.collectionPtr, C.uint64_t(segmentID), C.Sealed)
 	case segmentTypeGrowing:
-		segmentPtr = C.NewSegment(collection.collectionPtr, C.ulong(segmentID), C.Growing)
+		segmentPtr = C.NewSegment(collection.collectionPtr, C.uint64_t(segmentID), C.Growing)
 	default:
 		log.Warn("illegal segment type when create segment")
 		return nil
@@ -546,8 +546,8 @@ func (s *Segment) segmentPreInsert(numOfRecords int) (int64, error) {
 		return 0, nil
 	}
 	var offset int64
-	cOffset := (*C.long)(&offset)
-	status := C.PreInsert(s.segmentPtr, C.long(int64(numOfRecords)), cOffset)
+	cOffset := (*C.int64_t)(&offset)
+	status := C.PreInsert(s.segmentPtr, C.int64_t(int64(numOfRecords)), cOffset)
 
 	errorCode := status.error_code
 
@@ -566,7 +566,7 @@ func (s *Segment) segmentPreDelete(numOfRecords int) int64 {
 	*/
 	s.segPtrMu.RLock()
 	defer s.segPtrMu.RUnlock() // thread safe guaranteed by segCore, use RLock
-	var offset = C.PreDelete(s.segmentPtr, C.long(int64(numOfRecords)))
+	var offset = C.PreDelete(s.segmentPtr, C.int64_t(int64(numOfRecords)))
 
 	return int64(offset)
 }
@@ -609,10 +609,10 @@ func (s *Segment) segmentInsert(offset int64, entityIDs *[]UniqueID, timestamps 
 		copyOffset += sizeofPerRow
 	}
 
-	var cOffset = C.long(offset)
-	var cNumOfRows = C.long(numOfRow)
-	var cEntityIdsPtr = (*C.long)(&(*entityIDs)[0])
-	var cTimestampsPtr = (*C.ulong)(&(*timestamps)[0])
+	var cOffset = C.int64_t(offset)
+	var cNumOfRows = C.int64_t(numOfRow)
+	var cEntityIdsPtr = (*C.int64_t)(&(*entityIDs)[0])
+	var cTimestampsPtr = (*C.uint64_t)(&(*timestamps)[0])
 	var cSizeofPerRow = C.int(sizeofPerRow)
 	var cRawDataVoidPtr = unsafe.Pointer(&rawData[0])
 	log.Debug("QueryNode::Segment::InsertBegin", zap.Any("cNumOfRows", cNumOfRows))
@@ -659,10 +659,10 @@ func (s *Segment) segmentDelete(offset int64, entityIDs *[]UniqueID, timestamps 
 		return errors.New("Length of entityIDs not equal to length of timestamps")
 	}
 
-	var cOffset = C.long(offset)
-	var cSize = C.long(len(*entityIDs))
-	var cEntityIdsPtr = (*C.long)(&(*entityIDs)[0])
-	var cTimestampsPtr = (*C.ulong)(&(*timestamps)[0])
+	var cOffset = C.int64_t(offset)
+	var cSize = C.int64_t(len(*entityIDs))
+	var cEntityIdsPtr = (*C.int64_t)(&(*entityIDs)[0])
+	var cTimestampsPtr = (*C.uint64_t)(&(*timestamps)[0])
 
 	var status = C.Delete(s.segmentPtr, cOffset, cSize, cEntityIdsPtr, cTimestampsPtr)
 
@@ -788,7 +788,7 @@ func (s *Segment) dropFieldData(fieldID int64) error {
 		return errors.New(errMsg)
 	}
 
-	var status = C.DropFieldData(s.segmentPtr, C.long(fieldID))
+	var status = C.DropFieldData(s.segmentPtr, C.int64_t(fieldID))
 	errorCode := status.error_code
 	if errorCode != 0 {
 		errorMsg := C.GoString(status.error_msg)
@@ -864,7 +864,7 @@ func (s *Segment) dropSegmentIndex(fieldID int64) error {
 		return errors.New(errMsg)
 	}
 
-	var status = C.DropSealedSegmentIndex(s.segmentPtr, C.long(fieldID))
+	var status = C.DropSealedSegmentIndex(s.segmentPtr, C.int64_t(fieldID))
 	errorCode := status.error_code
 	if errorCode != 0 {
 		errorMsg := C.GoString(status.error_msg)
