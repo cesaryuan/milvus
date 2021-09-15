@@ -9,11 +9,19 @@
 // is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
 // or implied. See the License for the specific language governing permissions and limitations under the License.
 
+#ifdef WIN32
+#include <WinSock2.h>
+#include <Windows.h>
+#include <ws2tcpip.h>
+#endif
+
 #include "utils/ConfigUtils.h"
 #include "utils/Log.h"
 #include "utils/StringHelpFunctions.h"
 
+#ifndef WIN32
 #include <arpa/inet.h>
+#endif
 #include <algorithm>
 #include <cmath>
 #ifdef MILVUS_GPU_VERSION
@@ -21,11 +29,14 @@
 #endif
 #include <fiu/fiu-local.h>
 #include <sys/stat.h>
+#ifndef WIN32
 #include <sys/sysinfo.h>
+#endif
 #include <unistd.h>
 #include <limits>
 #include <regex>
 #include <set>
+#include <thread>
 #include <unordered_map>
 
 #if defined(__x86_64__)
@@ -108,18 +119,33 @@ parse_bytes(const std::string& str, std::string& err) {
 
 bool
 GetSystemMemInfo(int64_t& total_mem, int64_t& free_mem) {
+#ifdef WIN32
+    MEMORYSTATUSEX mem_stat;
+    mem_stat.dwLength = sizeof(MEMORYSTATUSEX);
+    if (::GlobalMemoryStatusEx(&mem_stat)) {
+        total_mem = mem_stat.ullTotalPhys;
+        free_mem = mem_stat.ullAvailPhys;
+        return true;
+    }
+    return false;
+#else
     struct sysinfo info;
     int ret = sysinfo(&info);
     total_mem = info.totalram;
     free_mem = info.freeram;
 
     return ret == 0;  // succeed 0, failed -1
+#endif
 }
 
 bool
 GetSystemAvailableThreads(int64_t& thread_count) {
     // threadCnt = std::thread::hardware_concurrency();
+#ifdef WIN32
+    thread_count = std::thread::hardware_concurrency();
+#else
     thread_count = sysconf(_SC_NPROCESSORS_CONF);
+#endif
     thread_count *= THREAD_MULTIPLY_CPU;
     fiu_do_on("GetSystemAvailableThreads.zero_thread", thread_count = 0);
 

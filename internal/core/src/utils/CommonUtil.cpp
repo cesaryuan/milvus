@@ -14,12 +14,18 @@
 
 #include <dirent.h>
 #include <fiu/fiu-local.h>
-#include <pwd.h>
 #include <sys/stat.h>
 #include <unistd.h>
 #include <boost/filesystem.hpp>
 #include <iostream>
 #include <vector>
+#ifdef WIN32
+#include <Windows.h>
+#ifdef CreateDirectory
+#undef CreateDirectory
+#define localtime_r(a,b) localtime_s(b,a)
+#endif
+#endif
 
 namespace milvus {
 
@@ -61,7 +67,11 @@ CommonUtil::CreateDirectory(const std::string& path) {
         return Status::OK();  // already exist
     }
 
+#ifdef WIN32
+    auto makeOK = _mkdir(path.c_str());
+#else
     int makeOK = mkdir(path.c_str(), S_IRWXU | S_IRGRP | S_IROTH);
+#endif
     fiu_do_on("CommonUtil.CreateDirectory.create_dir_fail", makeOK = 1);
     if (makeOK != 0) {
         return Status(SERVER_UNEXPECTED_ERROR, "failed to create directory: " + path);
@@ -138,6 +148,11 @@ CommonUtil::GetFileName(std::string filename) {
 
 std::string
 CommonUtil::GetExePath() {
+#ifdef WIN32
+    char buf[MAX_PATH];
+    GetModuleFileName(NULL, buf, MAX_PATH);
+    return std::string(buf);
+#else
     const int64_t buf_len = 1024;
     char buf[buf_len];
     int64_t cnt = readlink("/proc/self/exe", buf, buf_len);
@@ -155,6 +170,7 @@ CommonUtil::GetExePath() {
         return sub_str + "/";
     }
     return exe_path;
+#endif
 }
 
 bool
