@@ -28,7 +28,7 @@ CpuCacheMgr::GetInstance() {
 }
 
 CpuCacheMgr::CpuCacheMgr() {
-    cache_ = std::make_shared<Cache<DataObjPtr>>(config.cache.cache_size(), 1UL << 32, "[CACHE CPU]");
+    cache_ = std::make_shared<Cache<DataObjPtr>>(config.cache.cache_size(), 1ULL << 32, "[CACHE CPU]");
 
     if (config.cache.cpu_cache_threshold() > 0.0) {
         cache_->set_freemem_percent(config.cache.cpu_cache_threshold());
