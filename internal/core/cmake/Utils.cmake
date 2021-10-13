@@ -45,7 +45,7 @@ ENDMACRO(get_git_branch_name)
 
 # get last commit id
 MACRO(get_last_commit_id LAST_COMMIT_ID)
-    execute_process(COMMAND sh "-c" "git log --decorate | head -n 1 | awk '{print $2}'"
+    execute_process(COMMAND "git" "log" "--decorate" "-1" "--pretty=format:%H"
             OUTPUT_VARIABLE ${LAST_COMMIT_ID})
 
     message(DEBUG "LAST_COMMIT_ID = ${${LAST_COMMIT_ID}}")

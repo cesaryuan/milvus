@@ -25,7 +25,6 @@ done
 DIR=$( cd -P $( dirname $SOURCE ) && pwd )
 # echo $DIR
 
-
 CMAKE_BUILD=${DIR}/../cwrapper_rocksdb_build
 OUTPUT_LIB=${DIR}/../internal/kv/rocksdb/cwrapper/output
 SRC_DIR=${DIR}/../internal/kv/rocksdb/cwrapper
@@ -64,6 +63,15 @@ while getopts "t:h:f:" arg; do
 done
 echo "BUILD_TYPE: " $BUILD_TYPE
 echo "CUSTOM_THIRDPARTY_PATH: " $CUSTOM_THIRDPARTY_PATH
+
+# MSYS system
+if [ "$MSYSTEM" == "MINGW64" ] ; then
+  echo Using system rocksdb
+  CGO_CFLAGS="-I${MINGW_PREFIX}/include" \
+  CGO_LDFLAGS="-L${MINGW_PREFIX}/lib -lrocksdb -lstdc++ -lm -lz -lbz2 -lsnappy -llz4 -lzstd" \
+  go get github.com/tecbot/gorocksdb
+  exit $?
+fi
 
 pushd ${CMAKE_BUILD}
 CMAKE_CMD="cmake \
