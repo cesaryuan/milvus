@@ -100,6 +100,7 @@ jobs:
         uses: msys2/setup-msys2@v2
         with:
           msystem: mingw64
+          update: true
           install: >
             git make
             mingw-w64-x86_64-toolchain

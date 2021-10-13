@@ -6,7 +6,7 @@ if [[ "${MSYSTEM}" != "MINGW64" ]] ; then
 fi
 
 pacman -S --noconfirm --needed \
-    git make tar \
+    git make tar dos2unix zip unzip \
     mingw-w64-x86_64-toolchain \
     mingw-w64-x86_64-make \
     mingw-w64-x86_64-cmake \
