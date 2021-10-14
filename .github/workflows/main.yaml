@@ -74,3 +74,55 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./go_coverage.txt
           name: ubuntu-${{ matrix.ubuntu }}-unittests
+  windows:
+    name: Build with MSYS
+    runs-on: windows-2019
+    timeout-minutes: 90
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Cache go
+        uses: actions/cache@v2
+        with:
+          path: |
+            %LocalAppData%\go-build
+            ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: ${{ runner.os }}-go-
+      - name: Cache ccache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.ccache
+          key: ${{ runner.os }}-ccache-${{ hashFiles('internal/core/**') }}
+          restore-keys: ${{ runner.os }}-ccache-
+      - name: Configure Toolchain
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: mingw64
+          update: true
+          install: >
+            git make tar dos2unix zip unzip
+            mingw-w64-x86_64-toolchain
+            mingw-w64-x86_64-make
+            mingw-w64-x86_64-cmake
+            mingw-w64-x86_64-go
+            mingw-w64-x86_64-arrow
+            mingw-w64-x86_64-boost
+            mingw-w64-x86_64-rocksdb
+            mingw-w64-x86_64-intel-tbb
+            mingw-w64-x86_64-openblas
+      - name: Install Deps
+        shell: msys2 {0}
+        run: |
+          sh scripts/install_deps_msys.sh
+      - name: Build Milvus
+        shell: msys2 {0}
+        env:
+          CCACHE_COMPILERCHECK: content
+          CCACHE_COMPRESS: 1
+          CCACHE_COMPRESSLEVEL: 5
+          CCACHE_MAXSIZE: 2G
+          CCACHE_DIR: ~/.ccache
+        run: |
+          mingw32-make
