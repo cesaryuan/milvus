@@ -32,6 +32,7 @@ import (
 	"errors"
 	"io"
 	"math/rand"
+	"os"
 	"strconv"
 	"sync"
 	"sync/atomic"
@@ -198,7 +199,9 @@ func (i *IndexNode) Start() error {
 				log.Fatal("failed to stop server", zap.Error(err))
 			}
 			// manually send signal to starter goroutine
-			syscall.Kill(syscall.Getpid(), syscall.SIGINT)
+			if p, err := os.FindProcess(os.Getpid()); err == nil {
+				p.Signal(syscall.SIGINT)
+			}
 		})
 
 		i.UpdateStateCode(internalpb.StateCode_Healthy)

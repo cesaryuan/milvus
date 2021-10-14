@@ -65,13 +65,25 @@ done
 echo "BUILD_TYPE: " $BUILD_TYPE
 echo "CUSTOM_THIRDPARTY_PATH: " $CUSTOM_THIRDPARTY_PATH
 
+# MSYS system
+CMAKE_GENERATOR="Unix Makefiles"
+if [ "$MSYSTEM" == "MINGW64" ] ; then
+  # alised make from mingw32-make
+  test -d ${CMAKE_BUILD}/bin || mkdir -p ${CMAKE_BUILD}/bin
+  cp -fr $(which mingw32-make.exe) ${CMAKE_BUILD}/bin/make.exe
+  export PATH=${CMAKE_BUILD}/bin:${PATH}
+
+  CMAKE_GENERATOR="MSYS Makefiles"
+  export CMAKE_EXTRA_ARGS='-DCMAKE_MAKE_PROGRAM=mingw32-make'
+fi
+
 pushd ${CMAKE_BUILD}
 CMAKE_CMD="cmake \
 -DCMAKE_BUILD_TYPE=${BUILD_TYPE}
 -DCMAKE_INSTALL_PREFIX=${OUTPUT_LIB} \
 -DCUSTOM_THIRDPARTY_DOWNLOAD_PATH=${CUSTOM_THIRDPARTY_PATH} ${SRC_DIR}"
 
-${CMAKE_CMD}
+${CMAKE_CMD} -G "${CMAKE_GENERATOR}"
 echo ${CMAKE_CMD}
 
 if [[ ! ${jobs+1} ]]; then
@@ -84,6 +96,10 @@ if [ -f "${OUTPUT_LIB}/lib/librocksdb.a" ]; then
     go env -w CGO_LDFLAGS="-L${OUTPUT_LIB}/lib -l:librocksdb.a -lstdc++ -lm -lz"
 else
     go env -w CGO_LDFLAGS="-L${OUTPUT_LIB}/lib64 -l:librocksdb.a -lstdc++ -lm -lz"
+fi
+
+if [ "$MSYSTEM" == "MINGW64" ] ; then
+    go env -w CGO_LDFLAGS="-L${OUTPUT_LIB}/lib -l:librocksdb.a -lstdc++ -lm -lz -lshlwapi -lrpcrt4"
 fi
 
 go get github.com/tecbot/gorocksdb

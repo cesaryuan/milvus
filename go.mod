@@ -4,6 +4,7 @@ go 1.15
 
 require (
 	github.com/HdrHistogram/hdrhistogram-go v1.0.1 // indirect
+	github.com/StackExchange/wmi v1.2.1 // indirect
 	github.com/antonmedv/expr v1.8.9
 	github.com/apache/pulsar-client-go v0.6.1-0.20210728062540-29414db801a7 // BUGFIX #8803, update when pulsar-client-go has new release
 	github.com/apache/thrift/lib/go/thrift v0.0.0-20210120171102-e27e82c46ba4
@@ -14,6 +15,8 @@ require (
 	github.com/facebookgo/stack v0.0.0-20160209184415-751773369052 // indirect
 	github.com/facebookgo/subset v0.0.0-20200203212716-c811ad88dec4 // indirect
 	github.com/go-basic/ipv4 v1.0.0
+	github.com/gofrs/flock v0.8.1 // indirect
+	github.com/gogo/protobuf v1.3.2
 	github.com/golang/mock v1.5.0
 	github.com/golang/protobuf v1.5.2
 	github.com/google/btree v1.0.1

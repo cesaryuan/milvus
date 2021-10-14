@@ -33,7 +33,7 @@ if [ ! -d ${CMAKE_BUILD} ];then
     mkdir ${CMAKE_BUILD}
 fi
 
-if [ !-d ${OUTPUT_LIB} ];then
+if [ ! -d ${OUTPUT_LIB} ];then
     mkdir ${OUTPUT_LIB}
 fi
 
@@ -72,13 +72,27 @@ done
 echo "BUILD_TYPE: " $BUILD_TYPE
 echo "CUSTOM_THIRDPARTY_PATH: " $CUSTOM_THIRDPARTY_PATH
 
+
+# MSYS system
+CMAKE_GENERATOR="Unix Makefiles"
+if [ "$MSYSTEM" == "MINGW64" ] ; then
+  # alised make from mingw32-make
+  test -d ${CMAKE_BUILD}/bin || mkdir -p ${CMAKE_BUILD}/bin
+  cp -fr $(which mingw32-make.exe) ${CMAKE_BUILD}/bin/make.exe
+  export PATH=${CMAKE_BUILD}/bin:${PATH}
+
+  CMAKE_GENERATOR="MSYS Makefiles"
+  export CMAKE_EXTRA_ARGS='-DCMAKE_MAKE_PROGRAM=mingw32-make'
+fi
+
 pushd ${CMAKE_BUILD}
 CMAKE_CMD="cmake \
+${CMAKE_EXTRA_ARGS} \
 -DCMAKE_INSTALL_PREFIX=${OUTPUT_LIB} \
 -DCMAKE_BUILD_TYPE=${BUILD_TYPE} \
 -DCUSTOM_THIRDPARTY_DOWNLOAD_PATH=${CUSTOM_THIRDPARTY_PATH} ${SRC_DIR}"
 
-${CMAKE_CMD}
+${CMAKE_CMD} -G "${CMAKE_GENERATOR}"
 echo ${CMAKE_CMD}
 
 if [[ ! ${jobs+1} ]]; then

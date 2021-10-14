@@ -33,6 +33,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"os"
 	"path/filepath"
 	"strconv"
 	"sync"
@@ -138,7 +139,9 @@ func (node *QueryNode) Register() error {
 			log.Fatal("failed to stop server", zap.Error(err))
 		}
 		// manually send signal to starter goroutine
-		syscall.Kill(syscall.Getpid(), syscall.SIGINT)
+		if p, err := os.FindProcess(os.Getpid()); err == nil {
+			p.Signal(syscall.SIGINT)
+		}
 	})
 
 	Params.QueryNodeID = node.session.ServerID
