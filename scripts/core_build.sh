@@ -131,6 +131,38 @@ if [[ ! -d ${BUILD_OUTPUT_DIR} ]]; then
   mkdir ${BUILD_OUTPUT_DIR}
 fi
 
+CMAKE_GENERATOR="Unix Makefiles"
+
+# MSYS system
+if [ "$MSYSTEM" == "MINGW64" ] ; then
+  BUILD_UNITTEST=OFF
+  BUILD_TYPE=Release
+  BUILD_COVERAGE=OFF
+  PROFILING=OFF
+  GPU_VERSION=OFF
+  WITH_PROMETHEUS=OFF
+  CUDA_ARCH=OFF
+
+  # alised make from mingw32-make
+  test -d ${BUILD_OUTPUT_DIR}/bin || mkdir -p ${BUILD_OUTPUT_DIR}/bin
+  cp -fr $(which mingw32-make.exe) ${BUILD_OUTPUT_DIR}/bin/make.exe
+  export PATH=${BUILD_OUTPUT_DIR}/bin:${PATH}
+
+  # extra default cmake args for msys
+  CMAKE_GENERATOR="MSYS Makefiles"
+  export CMAKE_EXTRA_ARGS='-DCMAKE_MAKE_PROGRAM=mingw32-make'
+
+  # using system blas
+  export OpenBLAS_HOME="$(cygpath -w /mingw64)"
+
+  # path faiss soft link may not work under MSYS.
+  if [ ! -f ${CPP_SRC_DIR}/src/index/thirdparty/faiss/faiss/AutoTune.h ] ; then
+    rm -fr ${CPP_SRC_DIR}/src/index/thirdparty/faiss/faiss
+    cp -fr ${CPP_SRC_DIR}/src/index/thirdparty/faiss tmp_faiss
+    mv tmp_faiss ${CPP_SRC_DIR}/src/index/thirdparty/faiss/faiss
+  fi
+fi
+
 pushd ${BUILD_OUTPUT_DIR}
 
 # remove make cache since build.sh -l use default variables
@@ -145,6 +177,7 @@ if [[ ${MAKE_CLEAN} == "ON" ]]; then
 fi
 
 CMAKE_CMD="cmake \
+${CMAKE_EXTRA_ARGS} \
 -DBUILD_UNIT_TEST=${BUILD_UNITTEST} \
 -DCMAKE_INSTALL_PREFIX=${INSTALL_PREFIX}
 -DCMAKE_BUILD_TYPE=${BUILD_TYPE} \
@@ -158,8 +191,9 @@ CMAKE_CMD="cmake \
 -DMILVUS_CUDA_ARCH=${CUDA_ARCH} \
 -DCUSTOM_THIRDPARTY_DOWNLOAD_PATH=${CUSTOM_THIRDPARTY_PATH} \
 ${CPP_SRC_DIR}"
+
+${CMAKE_CMD} -G "${CMAKE_GENERATOR}"
 echo ${CMAKE_CMD}
-${CMAKE_CMD}
 
 
 if [[ ${RUN_CPPLINT} == "ON" ]]; then
