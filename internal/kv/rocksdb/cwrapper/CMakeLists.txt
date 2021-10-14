@@ -46,11 +46,20 @@ macro( build_rocksdb )
 
     set( ROCKSDB_CMAKE_ARGS
          "-DWITH_GFLAGS=OFF"
+         "-DWITH_TESTS=OFF"
+         "-DWITH_TOOLS=OFF"
+         "-DROCKSDB_INSTALL_ON_WINDOWS=ON"
          "-DROCKSDB_BUILD_SHARED=OFF"
          "-DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}"
          #This is used to solve 'illegal instruction' problem in some machine
          "-DPORTABLE=ON"
         )
+    if (MSYS)
+        # https://github.com/msys2/MINGW-packages/tree/8ba3ad86277253608d5afec724251419cdb4002a/mingw-w64-rocksdb
+        set( ROCKSDB_PATCH_COMMAND
+             patch -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/build_rocksdb_for_msys.patch
+            )
+    endif (MSYS)
 
     ExternalProject_Add(
             rocksdb-ep
@@ -62,6 +71,7 @@ macro( build_rocksdb )
             URL_MD5             "67f9e04fda62af551dd039c37b1808ac"
             CMAKE_ARGS          ${ROCKSDB_CMAKE_ARGS}
             INSTALL_COMMAND     make install
+            PATCH_COMMAND       "${ROCKSDB_PATCH_COMMAND}"
             )
 
     ExternalProject_Get_Property( rocksdb-ep INSTALL_DIR )

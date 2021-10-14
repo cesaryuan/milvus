@@ -20,6 +20,7 @@ import (
 	"context"
 	"errors"
 	"math/rand"
+	"os"
 	"sort"
 	"strconv"
 	"sync"
@@ -252,7 +253,9 @@ func (i *IndexCoord) Start() error {
 				log.Fatal("failed to stop server", zap.Error(err))
 			}
 			// manually send signal to starter goroutine
-			syscall.Kill(syscall.Getpid(), syscall.SIGINT)
+			if p, err := os.FindProcess(os.Getpid()); err == nil {
+				p.Signal(syscall.SIGINT)
+			}
 		})
 
 		startErr = i.sched.Start()
