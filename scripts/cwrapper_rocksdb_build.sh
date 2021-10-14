@@ -65,6 +65,14 @@ done
 echo "BUILD_TYPE: " $BUILD_TYPE
 echo "CUSTOM_THIRDPARTY_PATH: " $CUSTOM_THIRDPARTY_PATH
 
+# MSYS system
+if [ "$MSYSTEM" == "MINGW64" ] ; then
+  # TODO: compile rocksdb from source, patch may needed https://github.com/msys2/MINGW-packages/tree/master/mingw-w64-rocksdb
+  echo Using system rocksdb
+  go get github.com/tecbot/gorocksdb
+  exit $?
+fi
+
 pushd ${CMAKE_BUILD}
 CMAKE_CMD="cmake \
 -DCMAKE_BUILD_TYPE=${BUILD_TYPE}
