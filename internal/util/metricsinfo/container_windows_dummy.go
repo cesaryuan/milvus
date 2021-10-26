@@ -9,55 +9,26 @@
 // is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
 // or implied. See the License for the specific language governing permissions and limitations under the License.
 
-//go:build linux
+//go:build windows
 
 package metricsinfo
 
 import (
 	"errors"
-	"strings"
-
-	"github.com/containerd/cgroups"
 )
 
 // IfServiceInContainer checks if the service is running inside a container
+// It should be always false while under windows.
 func InContainer() (bool, error) {
-	paths, err := cgroups.ParseCgroupFile("/proc/1/cgroup")
-	if err != nil {
-		return false, err
-	}
-	devicePath := strings.TrimPrefix(paths[string(cgroups.Devices)], "/")
-	return devicePath != "", nil
+	return false, nil
 }
 
 // GetContainerMemLimit returns memory limit and error
 func GetContainerMemLimit() (uint64, error) {
-	control, err := cgroups.Load(cgroups.V1, cgroups.RootPath)
-	if err != nil {
-		return 0, err
-	}
-	stats, err := control.Stat(cgroups.IgnoreNotExist)
-	if err != nil {
-		return 0, err
-	}
-	if stats.Memory == nil || stats.Memory.Usage == nil {
-		return 0, errors.New("cannot find memory usage info from cGroups")
-	}
-	return stats.Memory.Usage.Limit, nil
+	return 0, errors.New("Not supported")
 }
 
 // GetContainerMemUsed returns memory usage and error
 func GetContainerMemUsed() (uint64, error) {
-	control, err := cgroups.Load(cgroups.V1, cgroups.RootPath)
-	if err != nil {
-		return 0, err
-	}
-	stats, err := control.Stat(cgroups.IgnoreNotExist)
-	if err != nil {
-		return 0, err
-	}
-	if stats.Memory == nil || stats.Memory.Usage == nil {
-		return 0, errors.New("cannot find memory usage info from cGroups")
-	}
-	return stats.Memory.Usage.Usage, nil
+	return 0, errors.New("Not supported")
 }
