@@ -9,6 +9,7 @@
 // is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
 // or implied. See the License for the specific language governing permissions and limitations under the License
 
+#include <cfloat>
 #include <vector>
 #include <unordered_set>
 
@@ -86,7 +87,7 @@ GetResultData(std::vector<std::vector<int64_t>>& search_records,
             search_records[index].push_back(result_pair.offset_++);
         }
 #else
-        float prev_dis = MAXFLOAT;
+        float prev_dis = FLT_MAX;
         std::unordered_set<int64_t> prev_pk_set;
         while (curr_offset - base_offset < topk) {
             result_pairs[0].reset_distance();
