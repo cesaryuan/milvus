@@ -9,6 +9,7 @@
 // is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
 // or implied. See the License for the specific language governing permissions and limitations under the License
 
+#include <cfloat>
 #include <vector>
 #include <unordered_set>
 
@@ -155,7 +156,7 @@ ResetSearchResult(std::vector<std::vector<int64_t>>& search_records, std::vector
                 internal_seg_offset = search_result->internal_seg_offsets_[offset];
             } else {
                 primary_key = INVALID_ID;
-                distance = MAXFLOAT;
+                distance = FLT_MAX;
                 internal_seg_offset = INVALID_SEG_OFFSET;
             }
             primary_keys.push_back(primary_key);
