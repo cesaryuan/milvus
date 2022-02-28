@@ -64,19 +64,26 @@ done
 echo "BUILD_TYPE: " $BUILD_TYPE
 echo "CUSTOM_THIRDPARTY_PATH: " $CUSTOM_THIRDPARTY_PATH
 
+# MSYS system
+CMAKE_GENERATOR="Unix Makefiles"
+if [ "$MSYSTEM" == "MINGW64" ] ; then
+  CMAKE_GENERATOR="MSYS Makefiles"
+fi
+
 pushd ${CMAKE_BUILD}
 CMAKE_CMD="cmake \
 -DCMAKE_BUILD_TYPE=${BUILD_TYPE} \
 -DCMAKE_INSTALL_PREFIX=${OUTPUT_LIB} \
 -DCUSTOM_THIRDPARTY_DOWNLOAD_PATH=${CUSTOM_THIRDPARTY_PATH} ${SRC_DIR}"
 
-${CMAKE_CMD}
+${CMAKE_CMD} -G "${CMAKE_GENERATOR}"
 echo ${CMAKE_CMD}
 
 unameOut="$(uname -s)"
 if [[ ! ${jobs+1} ]]; then
   case "${unameOut}" in
       Linux*)     jobs=$(nproc);;
+      MINGW64*)   jobs=2;;
       Darwin*)    jobs=$(sysctl -n hw.physicalcpu);;
       *)          echo "UNKNOWN:${unameOut}"; exit 0;
   esac
@@ -100,9 +107,15 @@ else
       esac
 fi
 
+if [ "$MSYSTEM" == "MINGW64" ] ; then
+  ldflags="-L${OUTPUT_LIB}/lib -lrocksdb -lstdc++ -lm -lz -lshlwapi -lrpcrt4"
+fi
+
+
 if [[ $(arch) == 'arm64' ]]; then
   go env -w GOARCH=arm64
 fi
 
 go env -w CGO_LDFLAGS="$ldflags" && GO111MODULE=on
+
 go get github.com/tecbot/gorocksdb

@@ -1,0 +1,75 @@
+diff -ru a/CMakeLists.txt b/CMakeLists.txt
+--- a/CMakeLists.txt	2022-03-09 13:26:35.894611600 +0800
++++ b/CMakeLists.txt	2022-03-09 13:59:40.840907700 +0800
+@@ -224,7 +224,7 @@
+     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wstrict-prototypes")
+   endif()
+   if(MINGW)
+-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-format -fno-asynchronous-unwind-tables")
++    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-format")
+     add_definitions(-D_POSIX_C_SOURCE=1)
+   endif()
+   if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
+@@ -1003,14 +1003,18 @@
+ endif()
+ 
+ if(WIN32)
+-  set(SYSTEM_LIBS ${SYSTEM_LIBS} shlwapi.lib rpcrt4.lib)
++  if(MSVC)
++    set(SYSTEM_LIBS ${SYSTEM_LIBS} shlwapi.lib rpcrt4.lib)
++  else()
++    set(SYSTEM_LIBS ${SYSTEM_LIBS} shlwapi rpcrt4)
++  endif()
+ else()
+   set(SYSTEM_LIBS ${CMAKE_THREAD_LIBS_INIT})
+ endif()
+ 
+-add_library(${ROCKSDB_STATIC_LIB} STATIC ${SOURCES} ${BUILD_VERSION_CC})
+-target_link_libraries(${ROCKSDB_STATIC_LIB} PRIVATE
+-  ${THIRDPARTY_LIBS} ${SYSTEM_LIBS})
++# add_library(${ROCKSDB_STATIC_LIB} STATIC ${SOURCES} ${BUILD_VERSION_CC})
++# target_link_libraries(${ROCKSDB_STATIC_LIB} PRIVATE
++#   ${THIRDPARTY_LIBS} ${SYSTEM_LIBS})
+ 
+ if(ROCKSDB_BUILD_SHARED)
+   add_library(${ROCKSDB_SHARED_LIB} SHARED ${SOURCES} ${BUILD_VERSION_CC})
+@@ -1026,13 +1030,14 @@
+       set_target_properties(${ROCKSDB_SHARED_LIB} PROPERTIES
+         COMPILE_FLAGS "/Fd${CMAKE_CFG_INTDIR}/${ROCKSDB_SHARED_LIB}.pdb")
+     endif()
+-  else()
+-    set_target_properties(${ROCKSDB_SHARED_LIB} PROPERTIES
++  endif()
++  set_target_properties(${ROCKSDB_SHARED_LIB} PROPERTIES
+                           LINKER_LANGUAGE CXX
+                           VERSION ${rocksdb_VERSION}
+                           SOVERSION ${rocksdb_VERSION_MAJOR}
+-                          OUTPUT_NAME "rocksdb${ARTIFACT_SUFFIX}")
+-  endif()
++                          OUTPUT_NAME "rocksdb${ARTIFACT_SUFFIX}"
++                          RUNTIME_OUTPUT_NAME "rocksdb"
++                          ARCHIVE_OUTPUT_NAME "rocksdb")
+ endif()
+ 
+ if(ROCKSDB_BUILD_SHARED AND NOT WIN32)
+@@ -1091,13 +1096,13 @@
+ 
+   install(DIRECTORY "${PROJECT_SOURCE_DIR}/cmake/modules" COMPONENT devel DESTINATION ${package_config_destination})
+ 
+-  install(
+-    TARGETS ${ROCKSDB_STATIC_LIB}
+-    EXPORT RocksDBTargets
+-    COMPONENT devel
+-    ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+-    INCLUDES DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
+-  )
++  # install(
++  #   TARGETS ${ROCKSDB_STATIC_LIB}
++  #   EXPORT RocksDBTargets
++  #   COMPONENT devel
++  #   ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
++  #   INCLUDES DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
++  # )
+ 
+   if(ROCKSDB_BUILD_SHARED)
+     install(

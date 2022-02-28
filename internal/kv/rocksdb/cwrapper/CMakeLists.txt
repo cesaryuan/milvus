@@ -21,7 +21,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 include( ExternalProject )
-if ( APPLE )
+if ( APPLE OR MSYS )
     set( ROCKSDB_VERSION "6.27.3" )
     set( ROCKSDB_SOURCE_URL
             "https://github.com/facebook/rocksdb/archive/v${ROCKSDB_VERSION}.tar.gz")
@@ -50,20 +50,39 @@ endif (CCACHE_FOUND)
 macro( build_rocksdb )
     message( STATUS "Building ROCKSDB-${ROCKSDB_VERSION} from source" )
 
-    if ( APPLE )
+    if ( APPLE OR MSYS )
         set ( ROCKSDB_URL_MD5 "e4a0625f0cec82060e62c81b787a1124" )
     else ()
         set ( ROCKSDB_URL_MD5 "67f9e04fda62af551dd039c37b1808ac" )
     endif ()
 
+    set(ROCKSDB_BUILD_SHARED OFF)
+    if (MSYS)
+        # rocksdb using static with gorocksdb may crash right now
+        set(ROCKSDB_BUILD_SHARED ON)
+    endif (MSYS)
+
     set( ROCKSDB_CMAKE_ARGS
          "-DWITH_GFLAGS=OFF"
-         "-DROCKSDB_BUILD_SHARED=OFF"
+         "-DWITH_TESTS=OFF"
+         "-DWITH_TOOLS=OFF"
+         "-DWITH_CORE_TOOLS=OFF"
+         "-DWITH_BENCHMARK_TOOLS=OFF"
+         "-DROCKSDB_INSTALL_ON_WINDOWS=ON"
+         "-DROCKSDB_BUILD_SHARED=${ROCKSDB_BUILD_SHARED}"
          "-DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}"
          "-DFAIL_ON_WARNINGS=OFF"
+         "-DUSE_RTTI=ON"
          #This is used to solve 'illegal instruction' problem in some machine
          "-DPORTABLE=ON"
         )
+    if (MSYS)
+        # ref: https://github.com/msys2/MINGW-packages/tree/master/mingw-w64-rocksdb
+        #      and disable static build
+        set( ROCKSDB_PATCH_COMMAND
+             patch -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/build_rocksdb_for_msys.patch
+            )
+    endif (MSYS)
 
     ExternalProject_Add(
             rocksdb-ep
@@ -75,6 +94,7 @@ macro( build_rocksdb )
             URL_MD5             ${ROCKSDB_URL_MD5}
             CMAKE_ARGS          ${ROCKSDB_CMAKE_ARGS}
             INSTALL_COMMAND     make install
+            PATCH_COMMAND       "${ROCKSDB_PATCH_COMMAND}"
             )
 
     ExternalProject_Get_Property( rocksdb-ep INSTALL_DIR )
