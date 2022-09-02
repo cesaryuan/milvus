@@ -124,12 +124,16 @@ endif()
 if(MILVUS_WITH_OSS)
 aux_source_directory(${MILVUS_ENGINE_SRC}/storage/oss storage_oss_files)
 endif()
+if(MILVUS_WITH_COS)
+aux_source_directory(${MILVUS_ENGINE_SRC}/storage/cos storage_cos_files)
+endif()
 
 set(storage_files
         ${storage_main_files}
         ${storage_disk_files}
         ${storage_s3_files}
         ${storage_oss_files}
+        ${storage_cos_files}
         )
 
 aux_source_directory(${MILVUS_ENGINE_SRC}/utils utils_files)
@@ -197,6 +201,10 @@ set(oss_sdk_lib
         alibabacloud-oss-cpp-sdk
 )
 
+set(cos_sdk_lib
+        cossdk
+)
+
 set(third_party_libs
         sqlite
         ${grpc_lib}
@@ -244,6 +252,8 @@ if (MILVUS_WITH_PROMETHEUS)
             )
 endif ()
 
+add_library(milvus_engine STATIC ${engine_files})
+
 if (MILVUS_WITH_AWS)
     add_compile_definitions(MILVUS_WITH_AWS)
     set(third_party_libs ${third_party_libs}
@@ -251,6 +261,7 @@ if (MILVUS_WITH_AWS)
             curl
             crypto
             )
+    add_dependencies(milvus_engine aws_ep)
 endif ()
 
 if (MILVUS_WITH_OSS)
@@ -260,6 +271,22 @@ if (MILVUS_WITH_OSS)
             curl
             crypto
             )
+    add_dependencies(milvus_engine oss_ep)
+endif ()
+
+if (MILVUS_WITH_COS)
+    add_compile_definitions(MILVUS_WITH_COS)
+    set(third_party_libs ${third_party_libs}
+            ${cos_sdk_lib}
+            PocoXML
+            PocoJSON
+            PocoNet
+            PocoNetSSL
+            PocoFoundation
+            PocoCrypto
+            PocoUtil
+            )
+    add_dependencies(milvus_engine cos_ep)
 endif ()
 
 set(engine_libs
@@ -276,7 +303,6 @@ if (NOT ${CMAKE_SYSTEM_PROCESSOR} MATCHES "aarch64")
             )
 endif ()
 
-add_library(milvus_engine STATIC ${engine_files})
 add_dependencies(milvus_engine fiu)
 target_link_libraries(milvus_engine
         knowhere

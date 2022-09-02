@@ -38,6 +38,12 @@
 #include "storage/oss/OSSIOWriter.h"
 #include "storage/oss/OSSOperation.h"
 #endif
+#ifdef MILVUS_WITH_COS
+#include "storage/cos/COSClientWrapper.h"
+#include "storage/cos/COSIOReader.h"
+#include "storage/cos/COSIOWriter.h"
+#include "storage/cos/COSOperation.h"
+#endif
 #include "config/Config.h"
 
 namespace milvus {
@@ -61,7 +67,7 @@ createFsHandler(const std::string& directory) {
     storage::IOWriterPtr writer_ptr{nullptr};
     storage::OperationPtr operation_ptr{nullptr};
 
-#if defined(MILVUS_WITH_AWS) || defined(MILVUS_WITH_OSS)
+#if defined(MILVUS_WITH_AWS) || defined(MILVUS_WITH_OSS) || defined(MILVUS_WITH_COS)
     server::Config& config = server::Config::GetInstance();
 #endif
 
@@ -85,6 +91,18 @@ createFsHandler(const std::string& directory) {
         reader_ptr = std::make_shared<storage::OSSIOReader>();
         writer_ptr = std::make_shared<storage::OSSIOWriter>();
         operation_ptr = std::make_shared<storage::OSSOperation>(directory);
+        return std::make_shared<storage::FSHandler>(reader_ptr, writer_ptr, operation_ptr);
+    }
+#endif
+
+#ifdef MILVUS_WITH_COS
+    bool enableCOS = false;
+    config.GetStorageConfigCOSEnable(enableCOS);
+    if (enableCOS) {
+        COSClientWrapper::GetInstance();
+        reader_ptr = std::make_shared<storage::COSIOReader>();
+        writer_ptr = std::make_shared<storage::COSIOWriter>();
+        operation_ptr = std::make_shared<storage::COSOperation>(directory);
         return std::make_shared<storage::FSHandler>(reader_ptr, writer_ptr, operation_ptr);
     }
 #endif

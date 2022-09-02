@@ -300,6 +300,21 @@ class Config {
     CheckStorageConfigOSSBucket(const std::string& value);
 #endif
 
+#ifdef MILVUS_WITH_COS
+    Status
+    CheckStorageConfigCOSEnable(const std::string& value);
+    Status
+    CheckStorageConfigCOSSecretId(const std::string& value);
+    Status
+    CheckStorageConfigCOSSecretKey(const std::string& value);
+    Status
+    CheckStorageConfigCOSBucket(const std::string& value);
+    Status
+    CheckStorageConfigCOSRegion(const std::string& value);
+    Status
+    CheckStorageConfigCOSDestDomain(const std::string& value);
+#endif
+
     /* metric config */
     Status
     CheckMetricConfigEnableMonitor(const std::string& value);
@@ -488,6 +503,26 @@ class Config {
     GetStorageConfigOSSBucket(std::string& value);
 #endif
 
+#ifdef MILVUS_WITH_COS
+    Status
+    GetStorageConfigCOSEnable(bool& value);
+
+    Status
+    GetStorageConfigCOSSecretId(std::string& value);
+
+    Status
+    GetStorageConfigCOSSecretKey(std::string& value);
+
+    Status
+    GetStorageConfigCOSBucket(std::string& value);
+
+    Status
+    GetStorageConfigCOSRegion(std::string& value);
+
+    Status
+    GetStorageConfigCOSDestDomain(std::string& value);
+#endif
+
     /* metric config */
     Status
     GetMetricConfigEnableMonitor(bool& value);
@@ -656,6 +691,21 @@ class Config {
     SetStorageConfigOSSSecretKey(const std::string& value);
     Status
     SetStorageConfigOSSBucket(const std::string& value);
+#endif
+
+#ifdef MILVUS_WITH_COS
+    Status
+    SetStorageConfigCOSEnable(const std::string& value);
+    Status
+    SetStorageConfigCOSSecretId(const std::string& value);
+    Status
+    SetStorageConfigCOSSecretKey(const std::string& value);
+    Status
+    SetStorageConfigCOSBucket(const std::string& value);
+    Status
+    SetStorageConfigCOSRegion(const std::string& value);
+    Status
+    SetStorageConfigCOSDestDomain(const std::string& value);
 #endif
 
     /* metric config */

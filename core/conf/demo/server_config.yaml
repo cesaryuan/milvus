@@ -72,11 +72,11 @@ network:
 #----------------------+------------------------------------------------------------+------------+-----------------+
 # s3_port              | The s3 server port.                                        | Integer    | 80              |
 #----------------------+------------------------------------------------------------+------------+-----------------+
-# s3_access_key        | The access key for accessing s3 service.                   | String     | s3_access_key   |
+# s3_access_key        | The access key for accessing s3 service.                   | String     | ""              |
 #----------------------+------------------------------------------------------------+------------+-----------------+
-# s3_secret_key        | The secrey key for accessing s3 service.                   | String     | s3_secret_key   |
+# s3_secret_key        | The secret key for accessing s3 service.                   | String     | ""              |
 #----------------------+------------------------------------------------------------+------------+-----------------+
-# s3_bucket            | The s3 bucket name for store milvus's data.                | String     | s3_bucket       |
+# s3_bucket            | The s3 bucket name for store milvus's data.                | String     | ""              |
 #                      | Note: please using differnet bucket for different milvus   |            |                 |
 #                      |       cluster.                                             |            |                 |
 #----------------------+------------------------------------------------------------+------------+-----------------+
@@ -90,13 +90,27 @@ network:
 # oss_endpoint         | The oss endpoint.                                          | String     | see description |
 #                      |   default: https://oss-cn-hangzhou.aliyuncs.com            |            |                 |
 #----------------------+------------------------------------------------------------+------------+-----------------+
-# oss_access_key       | The access key for accessing oss service.                  | String     | oss_access_key  |
+# oss_access_key       | The access key for accessing oss service.                  | String     | ""              |
 #----------------------+------------------------------------------------------------+------------+-----------------+
-# oss_secret_key       | The secrey key for accessing oss service.                  | String     | oss_secret_key  |
+# oss_secret_key       | The secret key for accessing oss service.                  | String     | ""              |
 #----------------------+------------------------------------------------------------+------------+-----------------+
-# oss_bucket           | The oss bucket name for store milvus's data.               | String     | oss_bucket      |
+# oss_bucket           | The oss bucket name for store milvus's data.               | String     | ""              |
 #                      | Note: please using differnet bucket for different milvus   |            |                 |
 #                      |       cluster.                                             |            |                 |
+#----------------------+------------------------------------------------------------+------------+-----------------+
+# cos_enabled          | If using cos storage backend.                              | Boolean    | false           |
+#----------------------+------------------------------------------------------------+------------+-----------------+
+# cos_region           | The cos region.                                            | String     | ap-guangzhou    |
+#----------------------+------------------------------------------------------------+------------+-----------------+
+# cos_secret_id        | The secret id for accessing cos service.                   | String     | ""              |
+#----------------------+------------------------------------------------------------+------------+-----------------+
+# cos_secret_key       | The secret key for accessing cos service.                  | String     | ""              |
+#----------------------+------------------------------------------------------------+------------+-----------------+
+# cos_bucket           | The cos bucket name for store milvus's data.               | String     | ""              |
+#                      | Note: please using differnet bucket for different milvus   |            |                 |
+#                      |       cluster.                                             |            |                 |
+#----------------------+------------------------------------------------------------+------------+-----------------+
+# cos_dest_domain      | If use custom domain, set dest domain                      | String     | ""              |
 #----------------------+------------------------------------------------------------+------------+-----------------+
 
 storage:

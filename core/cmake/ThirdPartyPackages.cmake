@@ -24,6 +24,7 @@ set(MILVUS_THIRDPARTY_DEPENDENCIES
         fiu
         AWS
         OSS
+        COS
         oatpp
         armadillo
         apu)
@@ -66,6 +67,8 @@ macro(build_dependency DEPENDENCY_NAME)
         build_aws()
     elseif("${DEPENDENCY_NAME}" STREQUAL "OSS")
         build_oss()
+    elseif("${DEPENDENCY_NAME}" STREQUAL "COS")
+        build_cos()
     elseif("${DEPENDENCY_NAME}" STREQUAL "armadillo")
         build_armadillo()
     elseif("${DEPENDENCY_NAME}" STREQUAL "apu")
@@ -160,8 +163,8 @@ set(EP_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CMAKE_CXX_FLAGS_${UPPERCASE_BUILD_TYPE}}"
 set(EP_C_FLAGS "${CMAKE_C_FLAGS} ${CMAKE_C_FLAGS_${UPPERCASE_BUILD_TYPE}}")
 
 # Set -fPIC on all external projects
-set(EP_CXX_FLAGS "${EP_CXX_FLAGS} -fPIC")
-set(EP_C_FLAGS "${EP_C_FLAGS} -fPIC")
+set(EP_CXX_FLAGS "${EP_CXX_FLAGS} -fPIC -Wno-sign-compare -Wno-maybe-uninitialized -Wno-implicit-fallthrough")
+set(EP_C_FLAGS "${EP_C_FLAGS} -fPIC -Wno-sign-compare -Wno-maybe-uninitialized -Wno-implicit-fallthrough")
 
 # CC/CXX environment variables are captured on the first invocation of the
 # builder (e.g make or ninja) instead of when CMake is invoked into to build
@@ -343,6 +346,12 @@ if (DEFINED ENV{MILVUS_OSS_URL})
     set(OSS_SOURCE_URL "$ENV{MILVUS_OSS_URL}")
 else ()
     set(OSS_SOURCE_URL "https://github.com/aliyun/aliyun-oss-cpp-sdk/archive/${OSS_VERSION}.tar.gz")
+endif ()
+
+if (DEFINED ENV{MILVUS_COS_URL})
+    set(COS_SOURCE_URL "$ENV{MILVUS_COS_URL}")
+else ()
+    set(COS_SOURCE_URL "https://github.com/tencentyun/cos-cpp-sdk-v5/archive/v${COS_VERSION}.tar.gz")
 endif ()
 
 if (DEFINED ENV{MILVUS_ARMADILLO_URL})
@@ -1182,6 +1191,67 @@ endif()
 
 
 # ----------------------------------------------------------------------
+# COS
+macro(build_cos)
+    message(STATUS "Building tencentyun-cos-sdk-${COS_VERSION} from source")
+    set(COS_PREFIX "${CMAKE_CURRENT_BINARY_DIR}/cos_ep-prefix/src/cos_ep")
+
+    set(COS_CMAKE_ARGS
+            ${EP_COMMON_TOOLCHAIN}
+            "-DCMAKE_INSTALL_PREFIX=${COS_PREFIX}"
+            -DCMAKE_BUILD_TYPE=Release
+            -DCMAKE_INSTALL_LIBDIR=lib)
+
+    set(COS_CPP_SDK_STATIC_LIB
+            "${COS_PREFIX}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}cossdk${CMAKE_STATIC_LIBRARY_SUFFIX}")
+    set(COS_INCLUDE_DIR ${COS_PREFIX}/include ${COS_PREFIX}/third_party/include)
+    set(COS_CMAKE_ARGS
+            ${COS_CMAKE_ARGS}
+            -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
+            -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
+            -DCMAKE_C_FLAGS=${EP_C_FLAGS}
+            -DCMAKE_CXX_FLAGS=${EP_CXX_FLAGS})
+
+    externalproject_add(cos_ep
+            ${EP_LOG_OPTIONS}
+            CMAKE_ARGS
+            ${COS_CMAKE_ARGS}
+            BUILD_COMMAND
+            ${MAKE}
+            ${MAKE_BUILD_ARGS}
+            INSTALL_DIR
+            ${COS_PREFIX}
+            URL
+            ${COS_SOURCE_URL}
+            INSTALL_COMMAND
+            bash -c "mkdir -p ${COS_PREFIX}/lib && \
+            install -cp lib/${CMAKE_STATIC_LIBRARY_PREFIX}cossdk${CMAKE_STATIC_LIBRARY_SUFFIX} ${COS_CPP_SDK_STATIC_LIB} && \
+            mkdir -p ${CMAKE_SOURCE_DIR}/milvus/lib && \
+            install -cp ${COS_PREFIX}/third_party/lib/linux/poco/libPo*.so ${CMAKE_SOURCE_DIR}/milvus/lib && \
+            ldconfig -v ${CMAKE_SOURCE_DIR}/milvus/lib"
+            )
+
+    file(MAKE_DIRECTORY "${COS_INCLUDE_DIR}")
+    add_library(cos-cpp-sdk STATIC IMPORTED)
+    set_target_properties(cos-cpp-sdk
+            PROPERTIES
+            IMPORTED_LOCATION "${COS_CPP_SDK_STATIC_LIB}"
+            INTERFACE_INCLUDE_DIRECTORIES "${COS_INCLUDE_DIR}"
+            )
+    add_dependencies(cos-cpp-sdk cos_ep)
+endmacro()
+
+if(MILVUS_WITH_COS)
+    resolve_dependency(COS)
+
+    link_directories(SYSTEM ${COS_PREFIX}/lib ${COS_PREFIX}/third_party/lib/linux/poco)
+
+    get_target_property(COS_CPP_SDK_INCLUDE_DIR cos-cpp-sdk INTERFACE_INCLUDE_DIRECTORIES)
+    include_directories(SYSTEM ${COS_CPP_SDK_INCLUDE_DIR})
+endif()
+
+
+# ----------------------------------------------------------------------
 # armadillo
 
 macro(build_armadillo)
@@ -1247,7 +1317,7 @@ macro(build_apu)
 
     set_target_properties(apu
             PROPERTIES
-	    IMPORTED_GLOBAL    TRUE
+            IMPORTED_GLOBAL    TRUE
             IMPORTED_LOCATION "${APU_SHARED_LIB}"
             INTERFACE_INCLUDE_DIRECTORIES "${APU_INCLUDE_DIR}")
 

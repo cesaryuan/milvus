@@ -115,6 +115,20 @@ const char* CONFIG_STORAGE_OSS_SECRET_KEY_DEFAULT = "";
 const char* CONFIG_STORAGE_OSS_BUCKET = "oss_bucket";
 const char* CONFIG_STORAGE_OSS_BUCKET_DEFAULT = "";
 #endif
+#ifdef MILVUS_WITH_COS
+const char* CONFIG_STORAGE_COS_ENABLE = "cos_enabled";
+const char* CONFIG_STORAGE_COS_ENABLE_DEFAULT = "false";
+const char* CONFIG_STORAGE_COS_REGION = "cos_region";
+const char* CONFIG_STORAGE_COS_REGION_DEFAULT = "ap-guangzhou";
+const char* CONFIG_STORAGE_COS_SECRET_ID = "cos_secret_id";
+const char* CONFIG_STORAGE_COS_SECRET_ID_DEFAULT = "";
+const char* CONFIG_STORAGE_COS_SECRET_KEY = "cos_secret_key";
+const char* CONFIG_STORAGE_COS_SECRET_KEY_DEFAULT = "";
+const char* CONFIG_STORAGE_COS_BUCKET = "cos_bucket";
+const char* CONFIG_STORAGE_COS_BUCKET_DEFAULT = "";
+const char* CONFIG_STORAGE_COS_DEST_DOMAIN = "cos_dest_domain";
+const char* CONFIG_STORAGE_COS_DEST_DOMAIN_DEFAULT = "";
+#endif
 
 const int64_t CONFIG_STORAGE_FILE_CLEANUP_TIMEOUT_MIN = 0;
 const int64_t CONFIG_STORAGE_FILE_CLEANUP_TIMEOUT_MAX = 3600;
@@ -418,6 +432,26 @@ Config::ValidateConfig() {
 
     std::string storage_oss_bucket;
     STATUS_CHECK(GetStorageConfigOSSBucket(storage_oss_bucket));
+#endif
+
+#ifdef MILVUS_WITH_COS
+    bool storage_cos_enable;
+    STATUS_CHECK(GetStorageConfigCOSEnable(storage_cos_enable));
+
+    std::string storage_cos_secret_id;
+    STATUS_CHECK(GetStorageConfigCOSSecretId(storage_cos_secret_id));
+
+    std::string storage_cos_secret_key;
+    STATUS_CHECK(GetStorageConfigCOSSecretKey(storage_cos_secret_key));
+
+    std::string storage_cos_bucket;
+    STATUS_CHECK(GetStorageConfigCOSBucket(storage_cos_bucket));
+
+    std::string storage_cos_region;
+    STATUS_CHECK(GetStorageConfigCOSRegion(storage_cos_region));
+
+    std::string storage_cos_dest_domain;
+    STATUS_CHECK(GetStorageConfigCOSDestDomain(storage_cos_dest_domain));
 #endif
 
     /* metric config */
@@ -1446,7 +1480,7 @@ Status
 Config::CheckStorageConfigOSSEnable(const std::string& value) {
     if (!ValidationUtil::ValidateStringIsBool(value).ok()) {
         std::string msg =
-            "Invalid storage config: " + value + ". Possible reason: storage_config.oss_enable is not a boolean.";
+            "Invalid storage config: " + value + ". Possible reason: storage_config.oss_enabled is not a boolean.";
         return Status(SERVER_INVALID_ARGUMENT, msg);
     }
     return Status::OK();
@@ -1484,6 +1518,54 @@ Config::CheckStorageConfigOSSBucket(const std::string& value) {
     return Status::OK();
 }
 
+#endif
+
+
+#ifdef MILVUS_WITH_COS
+
+Status
+Config::CheckStorageConfigCOSEnable(const std::string& value) {
+    if (!ValidationUtil::ValidateStringIsBool(value).ok()) {
+        std::string msg =
+            "Invalid storage config: " + value + ". Possible reason: storage_config.cos_enabled is not a boolean.";
+        return Status(SERVER_INVALID_ARGUMENT, msg);
+    }
+    return Status::OK();
+}
+
+Status
+Config::CheckStorageConfigCOSSecretId(const std::string& value) {
+    if (value.empty()) {
+        return Status(SERVER_INVALID_ARGUMENT, "storage_config.cos_secret_id is empty.");
+    }
+    return Status::OK();
+}
+
+Status
+Config::CheckStorageConfigCOSSecretKey(const std::string& value) {
+    if (value.empty()) {
+        return Status(SERVER_INVALID_ARGUMENT, "storage_config.cos_secret_key is empty.");
+    }
+    return Status::OK();
+}
+
+Status
+Config::CheckStorageConfigCOSBucket(const std::string& value) {
+    if (value.empty()) {
+        return Status(SERVER_INVALID_ARGUMENT, "storage_config.cos_bucket is empty.");
+    }
+    return Status::OK();
+}
+
+Status
+Config::CheckStorageConfigCOSRegion(const std::string& /* unused */) {
+    return Status::OK();
+}
+
+Status
+Config::CheckStorageConfigCOSDestDomain(const std::string& /* unused */) {
+    return Status::OK();
+}
 #endif
 
 /* metric config */
@@ -2590,6 +2672,47 @@ Config::GetStorageConfigOSSBucket(std::string& value) {
 
 #endif
 
+#ifdef MILVUS_WITH_COS
+Status
+Config::GetStorageConfigCOSEnable(bool& value) {
+    std::string str = GetConfigStr(CONFIG_STORAGE, CONFIG_STORAGE_COS_ENABLE, CONFIG_STORAGE_COS_ENABLE_DEFAULT);
+    STATUS_CHECK(CheckStorageConfigCOSEnable(str));
+    STATUS_CHECK(StringHelpFunctions::ConvertToBoolean(str, value));
+    return Status::OK();
+}
+
+Status
+Config::GetStorageConfigCOSSecretId(std::string& value) {
+    value = GetConfigStr(CONFIG_STORAGE, CONFIG_STORAGE_COS_SECRET_ID, CONFIG_STORAGE_COS_SECRET_ID_DEFAULT);
+    return Status::OK();
+}
+
+Status
+Config::GetStorageConfigCOSSecretKey(std::string& value) {
+    value = GetConfigStr(CONFIG_STORAGE, CONFIG_STORAGE_COS_SECRET_KEY, CONFIG_STORAGE_COS_SECRET_KEY_DEFAULT);
+    return Status::OK();
+}
+
+Status
+Config::GetStorageConfigCOSBucket(std::string& value) {
+    value = GetConfigStr(CONFIG_STORAGE, CONFIG_STORAGE_COS_BUCKET, CONFIG_STORAGE_COS_BUCKET_DEFAULT);
+    return Status::OK();
+}
+
+Status
+Config::GetStorageConfigCOSRegion(std::string& value) {
+    value = GetConfigStr(CONFIG_STORAGE, CONFIG_STORAGE_COS_REGION, CONFIG_STORAGE_COS_REGION_DEFAULT);
+    return Status::OK();
+}
+
+Status
+Config::GetStorageConfigCOSDestDomain(std::string& value) {
+    value = GetConfigStr(CONFIG_STORAGE, CONFIG_STORAGE_COS_DEST_DOMAIN, CONFIG_STORAGE_COS_DEST_DOMAIN_DEFAULT);
+    return Status::OK();
+}
+
+#endif
+
 /* metric config */
 Status
 Config::GetMetricConfigEnableMonitor(bool& value) {
@@ -3167,6 +3290,47 @@ Config::SetStorageConfigOSSBucket(const std::string& value) {
 }
 
 #endif
+
+
+#ifdef MILVUS_WITH_COS
+Status
+Config::SetStorageConfigCOSEnable(const std::string& value) {
+    STATUS_CHECK(CheckStorageConfigCOSEnable(value));
+    return SetConfigValueInMem(CONFIG_STORAGE, CONFIG_STORAGE_COS_ENABLE, value);
+}
+
+Status
+Config::SetStorageConfigCOSSecretId(const std::string& value) {
+    STATUS_CHECK(CheckStorageConfigCOSSecretId(value));
+    return SetConfigValueInMem(CONFIG_STORAGE, CONFIG_STORAGE_COS_SECRET_ID, value);
+}
+
+Status
+Config::SetStorageConfigCOSSecretKey(const std::string& value) {
+    STATUS_CHECK(CheckStorageConfigCOSSecretKey(value));
+    return SetConfigValueInMem(CONFIG_STORAGE, CONFIG_STORAGE_COS_SECRET_KEY, value);
+}
+
+Status
+Config::SetStorageConfigCOSBucket(const std::string& value) {
+    STATUS_CHECK(CheckStorageConfigCOSBucket(value));
+    return SetConfigValueInMem(CONFIG_STORAGE, CONFIG_STORAGE_COS_BUCKET, value);
+}
+
+Status
+Config::SetStorageConfigCOSRegion(const std::string& value) {
+    STATUS_CHECK(CheckStorageConfigCOSRegion(value));
+    return SetConfigValueInMem(CONFIG_STORAGE, CONFIG_STORAGE_COS_REGION, value);
+}
+
+Status
+Config::SetStorageConfigCOSDestDomain(const std::string& value) {
+    STATUS_CHECK(CheckStorageConfigCOSDestDomain(value));
+    return SetConfigValueInMem(CONFIG_STORAGE, CONFIG_STORAGE_COS_DEST_DOMAIN, value);
+}
+
+#endif
+
 
 /* metric config */
 Status
