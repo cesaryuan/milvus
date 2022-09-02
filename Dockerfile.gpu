@@ -1,0 +1,32 @@
+FROM matrixji/milvus-gpu-build-env:v1-20220508 as builder
+
+COPY . /src
+RUN cd /src/core && source /opt/rh/devtoolset-7/enable && sh build.sh -t Release -g
+
+FROM hectormolinero/tini:v18 AS tini
+FROM nvidia/cuda:11.6.2-runtime-centos7 AS runtime
+
+FROM nvidia/cuda:11.6.2-base-centos7
+
+ENV NVIDIA_DRIVER_CAPABILITIES compute,utility
+
+RUN yum --disablerepo=cuda install -y epel-release && \
+    yum --disablerepo=cuda install -y wget libgomp libgfortran4 mysql-devel openblas-devel lapack-devel && \
+    rm -rf /var/cache/yum/*
+
+COPY --from=builder /src/core/milvus /var/lib/milvus
+ENV LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/var/lib/milvus/lib"
+
+COPY --from=tini /usr/bin/tini /tini
+
+# copy cublas library from runtime
+COPY --from=runtime /usr/local/cuda/targets/x86_64-linux/lib/libcublasLt.so.11 /var/lib/milvus/lib/libcublasLt.so.11
+COPY --from=runtime /usr/local/cuda/targets/x86_64-linux/lib/libcublas.so.11 /var/lib/milvus/lib/libcublas.so.11
+
+ENTRYPOINT ["/tini", "--"]
+
+WORKDIR /var/lib/milvus
+
+CMD [ "/var/lib/milvus/bin/milvus_server", "-c", "/var/lib/milvus/conf/server_config.yaml" ]
+
+EXPOSE 19530
