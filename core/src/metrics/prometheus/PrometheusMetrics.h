@@ -14,6 +14,7 @@
 #include <prometheus/exposer.h>
 #include <prometheus/gateway.h>
 #include <prometheus/registry.h>
+
 #include <iostream>
 #include <memory>
 #include <string>

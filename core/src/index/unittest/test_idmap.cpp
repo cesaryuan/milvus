@@ -9,10 +9,10 @@
 // is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
 // or implied. See the License for the specific language governing permissions and limitations under the License.
 
-#include <gtest/gtest.h>
-
 #include <fiu-control.h>
 #include <fiu-local.h>
+#include <gtest/gtest.h>
+
 #include <iostream>
 #include <thread>
 
@@ -21,6 +21,7 @@
 #include "knowhere/index/vector_index/IndexType.h"
 #ifdef MILVUS_GPU_VERSION
 #include <faiss/gpu/GpuCloner.h>
+
 #include "knowhere/index/vector_index/gpu/IndexGPUIDMAP.h"
 #include "knowhere/index/vector_index/helpers/Cloner.h"
 #include "knowhere/index/vector_index/helpers/FaissGpuResourceMgr.h"

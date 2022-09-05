@@ -11,11 +11,11 @@
 
 #pragma once
 
+#include <grpcpp/server_context.h>
+
 #include <memory>
 #include <string>
 #include <unordered_map>
-
-#include <grpcpp/server_context.h>
 
 #include "server/context/ConnectionContext.h"
 #include "server/delivery/request/BaseRequest.h"

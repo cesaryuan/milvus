@@ -10,7 +10,9 @@
 // or implied. See the License for the specific language governing permissions and limitations under the License.
 
 #include "db/meta/MySQLConnectionPool.h"
+
 #include <fiu-local.h>
+
 #include <thread>
 
 namespace milvus::engine::meta {

@@ -11,9 +11,9 @@
 
 #include "cache/CpuCacheMgr.h"
 
-#include <utility>
-
 #include <fiu-local.h>
+
+#include <utility>
 
 #include "config/Config.h"
 #include "utils/Log.h"

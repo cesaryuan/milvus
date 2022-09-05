@@ -12,8 +12,10 @@
 #include <gtest/gtest.h>
 #include <knowhere/index/vector_index/IndexHNSW.h>
 #include <src/index/knowhere/knowhere/index/vector_index/helpers/IndexParameter.h>
+
 #include <iostream>
 #include <random>
+
 #include "knowhere/common/Exception.h"
 #include "unittest/utils.h"
 

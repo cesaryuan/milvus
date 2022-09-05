@@ -9,10 +9,11 @@
 // is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
 // or implied. See the License for the specific language governing permissions and limitations under the License
 
+#include "knowhere/common/Timer.h"
+
 #include <iostream>  // TODO(linxj): using Log instead
 
 #include "knowhere/common/Log.h"
-#include "knowhere/common/Timer.h"
 
 namespace milvus {
 namespace knowhere {

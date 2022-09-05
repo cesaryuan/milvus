@@ -11,13 +11,13 @@
 
 #pragma once
 
+#include <string>
+#include <vector>
+
 #include "db/Types.h"
 #include "db/meta/MetaTypes.h"
 #include "utils/Json.h"
 #include "utils/Status.h"
-
-#include <string>
-#include <vector>
 
 namespace milvus {
 namespace server {

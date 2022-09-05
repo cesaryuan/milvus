@@ -10,6 +10,7 @@
 // or implied. See the License for the specific language governing permissions and limitations under the License.
 
 #include "db/merge/MergeManagerImpl.h"
+
 #include "db/merge/MergeAdaptiveStrategy.h"
 #include "db/merge/MergeLayeredStrategy.h"
 #include "db/merge/MergeSimpleStrategy.h"

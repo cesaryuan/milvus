@@ -11,13 +11,13 @@
 
 #pragma once
 
-#include "LRU.h"
-#include "utils/Log.h"
-
 #include <atomic>
 #include <mutex>
 #include <set>
 #include <string>
+
+#include "LRU.h"
+#include "utils/Log.h"
 
 namespace milvus {
 namespace cache {

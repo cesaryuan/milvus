@@ -10,12 +10,13 @@
 // or implied. See the License for the specific language governing permissions and limitations under the License.
 
 #include "scheduler/Scheduler.h"
+
+#include <utility>
+
 #include "Algorithm.h"
 #include "action/Action.h"
 #include "cache/GpuCacheMgr.h"
 #include "event/LoadCompletedEvent.h"
-
-#include <utility>
 
 namespace milvus {
 namespace scheduler {

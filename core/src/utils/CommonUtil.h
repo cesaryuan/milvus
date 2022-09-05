@@ -11,10 +11,11 @@
 
 #pragma once
 
-#include "utils/Status.h"
-
 #include <time.h>
+
 #include <string>
+
+#include "utils/Status.h"
 
 namespace milvus {
 namespace server {

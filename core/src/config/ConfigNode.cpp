@@ -10,13 +10,15 @@
 // or implied. See the License for the specific language governing permissions and limitations under the License.
 
 #include "config/ConfigNode.h"
-#include "utils/Error.h"
-#include "utils/Log.h"
 
 #include <fiu-local.h>
+
 #include <algorithm>
 #include <sstream>
 #include <string>
+
+#include "utils/Error.h"
+#include "utils/Log.h"
 
 namespace milvus {
 namespace server {

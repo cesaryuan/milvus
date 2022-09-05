@@ -11,6 +11,7 @@
 
 #include <list>
 #include <random>
+
 #include "cache/GpuCacheMgr.h"
 #include "scheduler/Algorithm.h"
 #include "scheduler/action/Action.h"

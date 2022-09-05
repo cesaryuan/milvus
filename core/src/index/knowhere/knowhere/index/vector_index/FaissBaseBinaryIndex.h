@@ -11,10 +11,10 @@
 
 #pragma once
 
+#include <faiss/IndexBinary.h>
+
 #include <memory>
 #include <utility>
-
-#include <faiss/IndexBinary.h>
 
 #include "knowhere/common/BinarySet.h"
 #include "knowhere/common/Dataset.h"

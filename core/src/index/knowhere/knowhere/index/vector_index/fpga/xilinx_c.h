@@ -23,14 +23,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <termios.h>
-#include <time.h>
-#include <unistd.h>
-
 #include <sys/mman.h>
 #include <sys/stat.h>
 #include <sys/time.h>
 #include <sys/types.h>
+#include <termios.h>
+#include <time.h>
+#include <unistd.h>
 
 #define DEVICE_C2H0 "/dev/xdma0_c2h_0"
 #define DEVICE_H2C0 "/dev/xdma0_h2c_0"

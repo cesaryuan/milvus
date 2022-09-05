@@ -11,6 +11,11 @@
 
 #pragma once
 
+#include <memory>
+#include <mutex>
+#include <string>
+#include <vector>
+
 #include "BuildMgr.h"
 #include "CPUBuilder.h"
 #include "JobMgr.h"
@@ -24,11 +29,6 @@
 #include "selector/FaissIVFSQ8HPass.h"
 #include "selector/FallbackPass.h"
 #include "selector/Optimizer.h"
-
-#include <memory>
-#include <mutex>
-#include <string>
-#include <vector>
 #ifdef MILVUS_APU_VERSION
 #include "selector/ApuPass.h"
 #endif

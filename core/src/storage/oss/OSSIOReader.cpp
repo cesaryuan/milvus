@@ -16,7 +16,9 @@
 // under the License.
 
 #include "storage/oss/OSSIOReader.h"
+
 #include <cstring>
+
 #include "OSSClientWrapper.h"
 
 namespace milvus {

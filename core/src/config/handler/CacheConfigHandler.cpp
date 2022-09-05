@@ -10,6 +10,7 @@
 // or implied. See the License for the specific language governing permissions and limitations under the License.
 
 #include "config/handler/CacheConfigHandler.h"
+
 #include "config/Config.h"
 
 namespace milvus {

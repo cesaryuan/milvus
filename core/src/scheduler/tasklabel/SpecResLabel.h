@@ -11,11 +11,11 @@
 
 #pragma once
 
-#include "TaskLabel.h"
-#include "scheduler/ResourceMgr.h"
-
 #include <memory>
 #include <string>
+
+#include "TaskLabel.h"
+#include "scheduler/ResourceMgr.h"
 
 // class Resource;
 //

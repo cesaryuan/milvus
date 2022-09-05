@@ -12,6 +12,7 @@
 #include "db/insert/MemManagerImpl.h"
 
 #include <fiu-local.h>
+
 #include <thread>
 
 #include "VectorSource.h"

@@ -15,10 +15,11 @@
 // specific language governing permissions and limitations
 // under the License.
 
-#include "faiss/utils/instruction_set.h"
-
 #include <gtest/gtest.h>
+
 #include <iostream>
+
+#include "faiss/utils/instruction_set.h"
 
 void
 ShowInstructionSet() {

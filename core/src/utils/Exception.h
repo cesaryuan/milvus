@@ -11,10 +11,10 @@
 
 #pragma once
 
-#include "utils/Error.h"
-
 #include <exception>
 #include <string>
+
+#include "utils/Error.h"
 
 namespace milvus {
 

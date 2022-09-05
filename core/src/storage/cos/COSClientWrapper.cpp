@@ -68,7 +68,7 @@ COSClientWrapper::CreateBucket() {
     const auto result = client_ptr_->PutBucket(request, &response);
     if (!result.IsSucc()) {
         if (result.GetErrorCode() != "BucketAlreadyExists") {
-            LOG_STORAGE_ERROR_ << "ERROR: CreateBucket: " << result.GetErrorCode() << ": " << result.GetErrorMsg();
+            LOG_STORAGE_WARNING_ << "ERROR: CreateBucket: " << result.GetErrorCode() << ": " << result.GetErrorMsg();
             return Status(SERVER_UNEXPECTED_ERROR, result.GetErrorMsg());
         }
     }
@@ -84,7 +84,7 @@ COSClientWrapper::DeleteBucket() {
 
     const auto result = client_ptr_->DeleteBucket(request, &response);
     if (!result.IsSucc()) {
-        LOG_STORAGE_ERROR_ << "ERROR: DeleteBucket: " << result.GetErrorCode() << ": " << result.GetErrorMsg();
+        LOG_STORAGE_WARNING_ << "ERROR: DeleteBucket: " << result.GetErrorCode() << ": " << result.GetErrorMsg();
         return Status(SERVER_UNEXPECTED_ERROR, result.GetErrorMsg());
     }
 
@@ -106,8 +106,9 @@ COSClientWrapper::PutObjectFile(const std::string& object_name, const std::strin
     qcloud_cos::PutObjectByStreamResp response;
 
     const auto result = client_ptr_->PutObject(request, &response);
-     if (!result.IsSucc()) {
-        LOG_STORAGE_ERROR_ << "ERROR: PutObjectFile: " << object_name << ", " << result.GetErrorCode() << ": " << result.GetErrorMsg();
+    if (!result.IsSucc()) {
+        LOG_STORAGE_WARNING_ << "ERROR: PutObjectFile: " << object_name << ", " << result.GetErrorCode() << ": "
+                             << result.GetErrorMsg();
         return Status(SERVER_UNEXPECTED_ERROR, result.GetErrorMsg());
     }
 
@@ -124,7 +125,8 @@ COSClientWrapper::PutObjectStr(const std::string& object_name, const std::string
 
     const auto result = client_ptr_->PutObject(request, &response);
     if (!result.IsSucc()) {
-        LOG_STORAGE_ERROR_ << "ERROR: PutObject: " << object_name << ", " << result.GetErrorCode() << ": " << result.GetErrorMsg();
+        LOG_STORAGE_WARNING_ << "ERROR: PutObject: " << object_name << ", " << result.GetErrorCode() << ": "
+                             << result.GetErrorMsg();
         return Status(SERVER_UNEXPECTED_ERROR, result.GetErrorMsg());
     }
 
@@ -134,13 +136,15 @@ COSClientWrapper::PutObjectStr(const std::string& object_name, const std::string
 
 Status
 COSClientWrapper::GetObjectFile(const std::string& object_name, const std::string& file_path) {
-    auto stream = std::make_shared<std::fstream>(file_path, std::ios_base::out | std::ios_base::in | std::ios_base::trunc | std::ios_base::binary);
+    auto stream = std::make_shared<std::fstream>(
+        file_path, std::ios_base::out | std::ios_base::in | std::ios_base::trunc | std::ios_base::binary);
     qcloud_cos::GetObjectByStreamReq request(cos_bucket_, normalize_object_name(object_name), *stream);
     qcloud_cos::GetObjectByStreamResp response;
 
     const auto result = client_ptr_->GetObject(request, &response);
-        if (!result.IsSucc()) {
-        LOG_STORAGE_ERROR_ << "ERROR: GetObjectFile: " << object_name << ", " << result.GetErrorCode() << ": " << result.GetErrorMsg();
+    if (!result.IsSucc()) {
+        LOG_STORAGE_WARNING_ << "ERROR: GetObjectFile: " << object_name << ", " << result.GetErrorCode() << ": "
+                             << result.GetErrorMsg();
         return Status(SERVER_UNEXPECTED_ERROR, result.GetErrorMsg());
     }
 
@@ -156,7 +160,8 @@ COSClientWrapper::GetObjectStr(const std::string& object_name, std::string& cont
 
     const auto result = client_ptr_->GetObject(request, &response);
     if (!result.IsSucc()) {
-        LOG_STORAGE_ERROR_ << "ERROR: GetObject: " << object_name << ", " << result.GetErrorCode() << ": " << result.GetErrorMsg();
+        LOG_STORAGE_WARNING_ << "ERROR: GetObject: " << object_name << ", " << result.GetErrorCode() << ": "
+                             << result.GetErrorMsg();
         return Status(SERVER_UNEXPECTED_ERROR, result.GetErrorMsg());
     }
 
@@ -173,14 +178,14 @@ COSClientWrapper::ListObjects(std::vector<std::string>& object_list, const std::
 
     auto result = client_ptr_->GetBucket(request, &response);
     if (!result.IsSucc()) {
-        LOG_STORAGE_ERROR_ << "ERROR: GetBucket: " << result.GetErrorCode() << ": " << result.GetErrorMsg();
+        LOG_STORAGE_WARNING_ << "ERROR: GetBucket: " << result.GetErrorCode() << ": " << result.GetErrorMsg();
         return Status(SERVER_UNEXPECTED_ERROR, result.GetErrorMsg());
     }
 
-    for (const auto &content: response.GetContents()) {
+    for (const auto& content : response.GetContents()) {
         object_list.emplace_back(content.m_key);
     }
-    
+
     if (prefix.empty()) {
         LOG_STORAGE_DEBUG_ << "ListObjects '" << cos_bucket_ << "' successfully!";
     } else {
@@ -192,13 +197,13 @@ COSClientWrapper::ListObjects(std::vector<std::string>& object_list, const std::
 
 Status
 COSClientWrapper::DeleteObject(const std::string& object_name) {
-
     qcloud_cos::DeleteObjectReq request(cos_bucket_, normalize_object_name(object_name));
     qcloud_cos::DeleteObjectResp response;
     const auto result = client_ptr_->DeleteObject(request, &response);
 
     if (!result.IsSucc()) {
-        LOG_STORAGE_ERROR_ << "ERROR: DeleteObject: " << object_name << ", " << result.GetErrorCode() << ": " << result.GetErrorMsg();
+        LOG_STORAGE_WARNING_ << "ERROR: DeleteObject: " << object_name << ", " << result.GetErrorCode() << ": "
+                             << result.GetErrorMsg();
         return Status(SERVER_UNEXPECTED_ERROR, result.GetErrorMsg());
     }
 

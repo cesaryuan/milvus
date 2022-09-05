@@ -12,10 +12,11 @@
 #ifdef MILVUS_APU_VERSION
 
 #include "knowhere/index/vector_index/fpga/GsiHammingIndex.h"
-#include "ApuInst.h"
-#include "scheduler/task/SearchTask.h"
 
 #include <string>
+
+#include "ApuInst.h"
+#include "scheduler/task/SearchTask.h"
 
 namespace milvus {
 namespace knowhere {

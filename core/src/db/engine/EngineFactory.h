@@ -11,11 +11,11 @@
 
 #pragma once
 
+#include <string>
+
 #include "ExecutionEngine.h"
 #include "utils/Json.h"
 #include "utils/Status.h"
-
-#include <string>
 
 namespace milvus {
 namespace engine {

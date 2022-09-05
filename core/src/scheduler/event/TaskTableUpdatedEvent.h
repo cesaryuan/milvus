@@ -11,11 +11,11 @@
 
 #pragma once
 
-#include "Event.h"
-
 #include <memory>
 #include <string>
 #include <utility>
+
+#include "Event.h"
 
 namespace milvus {
 namespace scheduler {

@@ -10,9 +10,10 @@
 // or implied. See the License for the specific language governing permissions and limitations under the License.
 
 #include "db/meta/FilesHolder.h"
-#include "utils/Log.h"
 
 #include <utility>
+
+#include "utils/Log.h"
 
 namespace milvus {
 namespace engine {

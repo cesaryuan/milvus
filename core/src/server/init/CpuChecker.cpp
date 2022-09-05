@@ -11,11 +11,11 @@
 
 #include "server/init/CpuChecker.h"
 
+#include <fiu-local.h>
+
 #include <iostream>
 #include <string>
 #include <vector>
-
-#include <fiu-local.h>
 
 #include "faiss/FaissHook.h"
 #include "faiss/utils/instruction_set.h"

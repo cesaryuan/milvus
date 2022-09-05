@@ -11,9 +11,11 @@
 
 #ifdef MILVUS_GPU_VERSION
 #include "src/scheduler/selector/Pass.h"
+
 #include <iostream>
 #include <string>
 #include <vector>
+
 #include "cache/GpuCacheMgr.h"
 #include "scheduler/resource/Resource.h"
 #include "scheduler/task/SearchTask.h"

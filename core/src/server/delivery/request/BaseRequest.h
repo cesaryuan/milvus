@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include <condition_variable>
+
 #include "db/Types.h"
 #include "db/meta/MetaTypes.h"
 #include "grpc/gen-milvus/milvus.grpc.pb.h"
@@ -19,8 +21,6 @@
 #include "query/GeneralQuery.h"
 #include "utils/Json.h"
 #include "utils/Status.h"
-
-#include <condition_variable>
 //#include <gperftools/profiler.h>
 #include <memory>
 #include <string>

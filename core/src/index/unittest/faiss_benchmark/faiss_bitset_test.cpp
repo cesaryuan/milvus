@@ -15,17 +15,6 @@
 // specific language governing permissions and limitations
 // under the License.
 
-#include <gtest/gtest.h>
-
-#include <hdf5.h>
-#include <sys/time.h>
-#include <sys/types.h>
-#include <unistd.h>
-#include <cassert>
-#include <cmath>
-#include <cstdio>
-#include <vector>
-
 #include <faiss/AutoTune.h>
 #include <faiss/Index.h>
 #include <faiss/IndexIVF.h>
@@ -38,6 +27,16 @@
 #include <faiss/index_io.h>
 #include <faiss/utils/ConcurrentBitset.h>
 #include <faiss/utils/distances.h>
+#include <gtest/gtest.h>
+#include <hdf5.h>
+#include <sys/time.h>
+#include <sys/types.h>
+#include <unistd.h>
+
+#include <cassert>
+#include <cmath>
+#include <cstdio>
+#include <vector>
 
 /*****************************************************
  * To run this test, please download the HDF5 from

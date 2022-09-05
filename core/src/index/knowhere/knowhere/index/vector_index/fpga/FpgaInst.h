@@ -13,6 +13,7 @@
 #define FPGA_INST_H
 #include <memory>
 #include <mutex>
+
 #include "Fpga.h"
 namespace Fpga {
 class FpgaInst {

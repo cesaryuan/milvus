@@ -9,13 +9,14 @@
 // is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
 // or implied. See the License for the specific language governing permissions and limitations under the License
 
+#include "knowhere/index/vector_index/fpga/Fpga.h"
+
+#include <armadillo>
 #include <cassert>
 #include <cstdlib>
 #include <fstream>
 #include <iostream>
 
-#include <armadillo>
-#include "knowhere/index/vector_index/fpga/Fpga.h"
 #include "knowhere/index/vector_index/fpga/utils.h"
 #include "knowhere/index/vector_index/fpga/xilinx_c.h"
 

@@ -11,6 +11,7 @@
 
 #include <gtest/gtest.h>
 #include <immintrin.h>
+
 #include <cassert>
 #include <chrono>
 #include <unordered_map>

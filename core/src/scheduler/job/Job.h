@@ -22,7 +22,6 @@
 #include <vector>
 
 #include "scheduler/interface/interfaces.h"
-
 #include "server/context/Context.h"
 
 namespace milvus {

@@ -11,13 +11,13 @@
 
 #pragma once
 
-#include "server/delivery/request/BaseRequest.h"
-#include "server/delivery/request/SearchRequest.h"
-
 #include <memory>
 #include <set>
 #include <string>
 #include <vector>
+
+#include "server/delivery/request/BaseRequest.h"
+#include "server/delivery/request/SearchRequest.h"
 
 namespace milvus {
 namespace server {

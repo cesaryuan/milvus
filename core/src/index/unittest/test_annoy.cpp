@@ -11,12 +11,12 @@
 
 #include <gtest/gtest.h>
 #include <src/index/knowhere/knowhere/index/vector_index/helpers/IndexParameter.h>
+
 #include <iostream>
 #include <sstream>
 
 #include "knowhere/common/Exception.h"
 #include "knowhere/index/vector_index/IndexAnnoy.h"
-
 #include "unittest/utils.h"
 
 using ::testing::Combine;

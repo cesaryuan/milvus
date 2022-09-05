@@ -11,10 +11,10 @@
 
 #pragma once
 
+#include <faiss/Index.h>
+
 #include <memory>
 #include <utility>
-
-#include <faiss/Index.h>
 
 #include "knowhere/common/BinarySet.h"
 #include "knowhere/index/vector_index/IndexType.h"

@@ -11,12 +11,12 @@
 
 #pragma once
 
+#include <memory>
+#include <queue>
+
 #include "config/handler/EngineConfigHandler.h"
 #include "server/delivery/strategy/RequestStrategy.h"
 #include "utils/Status.h"
-
-#include <memory>
-#include <queue>
 
 namespace milvus {
 namespace server {

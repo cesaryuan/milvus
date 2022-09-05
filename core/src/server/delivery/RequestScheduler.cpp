@@ -10,11 +10,13 @@
 // or implied. See the License for the specific language governing permissions and limitations under the License.
 
 #include "server/delivery/RequestScheduler.h"
-#include "utils/Log.h"
 
 #include <fiu-local.h>
 #include <unistd.h>
+
 #include <utility>
+
+#include "utils/Log.h"
 
 namespace milvus {
 namespace server {

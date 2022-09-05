@@ -11,9 +11,9 @@
 
 #pragma once
 
-#include "TaskLabel.h"
-
 #include <memory>
+
+#include "TaskLabel.h"
 
 namespace milvus {
 namespace scheduler {

@@ -11,13 +11,14 @@
 
 #pragma once
 
-#include "utils/Status.h"
-
 #include <grpcpp/grpcpp.h>
+
 #include <cstdint>
 #include <memory>
 #include <string>
 #include <thread>
+
+#include "utils/Status.h"
 
 namespace milvus {
 namespace server {

@@ -17,7 +17,6 @@
 #include <thread>
 
 #include "server/web_impl/component/AppComponent.hpp"
-
 #include "utils/Status.h"
 
 namespace milvus {

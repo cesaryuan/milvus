@@ -10,14 +10,15 @@
 // or implied. See the License for the specific language governing permissions and limitations under the License.
 
 #include "db/merge/MergeTask.h"
+
+#include <memory>
+#include <string>
+
 #include "db/Utils.h"
 #include "metrics/Metrics.h"
 #include "segment/SegmentReader.h"
 #include "segment/SegmentWriter.h"
 #include "utils/Log.h"
-
-#include <memory>
-#include <string>
 
 namespace milvus {
 namespace engine {

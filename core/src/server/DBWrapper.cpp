@@ -11,12 +11,12 @@
 
 #include "server/DBWrapper.h"
 
+#include <faiss/utils/distances.h>
 #include <omp.h>
+
 #include <cmath>
 #include <string>
 #include <vector>
-
-#include <faiss/utils/distances.h>
 
 #include "config/Config.h"
 #include "db/DBFactory.h"

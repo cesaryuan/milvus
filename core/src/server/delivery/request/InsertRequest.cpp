@@ -10,17 +10,19 @@
 // or implied. See the License for the specific language governing permissions and limitations under the License.
 
 #include "server/delivery/request/InsertRequest.h"
+
+#include <fiu-local.h>
+
+#include <memory>
+#include <string>
+#include <vector>
+
 #include "db/Utils.h"
 #include "server/DBWrapper.h"
 #include "utils/CommonUtil.h"
 #include "utils/Log.h"
 #include "utils/TimeRecorder.h"
 #include "utils/ValidationUtil.h"
-
-#include <fiu-local.h>
-#include <memory>
-#include <string>
-#include <vector>
 
 #ifdef ENABLE_CPU_PROFILING
 #include <gperftools/profiler.h>

@@ -11,12 +11,12 @@
 
 #pragma once
 
+#include <faiss/utils/ConcurrentBitset.h>
+
 #include <memory>
 #include <string>
 #include <unordered_map>
 #include <vector>
-
-#include <faiss/utils/ConcurrentBitset.h>
 //#include <scheduler/job/SearchJob.h>
 
 #include "query/GeneralQuery.h"

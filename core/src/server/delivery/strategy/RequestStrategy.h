@@ -11,15 +11,15 @@
 
 #pragma once
 
-#include "server/delivery/request/BaseRequest.h"
-#include "utils/BlockingQueue.h"
-#include "utils/Status.h"
-
 #include <memory>
 #include <queue>
 #include <string>
 #include <utility>
 #include <vector>
+
+#include "server/delivery/request/BaseRequest.h"
+#include "utils/BlockingQueue.h"
+#include "utils/Status.h"
 
 namespace milvus {
 namespace server {

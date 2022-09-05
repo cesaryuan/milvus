@@ -10,16 +10,18 @@
 // or implied. See the License for the specific language governing permissions and limitations under the License.
 
 #include "metrics/SystemInfo.h"
-#include "thirdparty/nlohmann/json.hpp"
-#include "utils/Exception.h"
-#include "utils/Log.h"
 
 #include <dirent.h>
 #include <fiu-local.h>
 #include <sys/sysinfo.h>
 #include <sys/times.h>
 #include <unistd.h>
+
 #include <map>
+
+#include "thirdparty/nlohmann/json.hpp"
+#include "utils/Exception.h"
+#include "utils/Log.h"
 
 #ifdef MILVUS_GPU_VERSION
 

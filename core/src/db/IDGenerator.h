@@ -11,11 +11,11 @@
 
 #pragma once
 
-#include "Types.h"
-#include "utils/Status.h"
-
 #include <cstddef>
 #include <vector>
+
+#include "Types.h"
+#include "utils/Status.h"
 
 namespace milvus {
 namespace engine {

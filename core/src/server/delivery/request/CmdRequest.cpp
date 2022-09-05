@@ -10,13 +10,14 @@
 // or implied. See the License for the specific language governing permissions and limitations under the License.
 
 #include "server/delivery/request/CmdRequest.h"
+
+#include <memory>
+
 #include "config/Config.h"
 #include "metrics/SystemInfo.h"
 #include "scheduler/SchedInst.h"
 #include "utils/Log.h"
 #include "utils/TimeRecorder.h"
-
-#include <memory>
 
 namespace milvus {
 namespace server {

@@ -11,12 +11,13 @@
 
 #pragma once
 
+#include <SPTAG/AnnService/inc/Core/Common.h>
+
 #include <memory>
 #include <string>
 #include <utility>
 #include <vector>
 
-#include <SPTAG/AnnService/inc/Core/Common.h>
 #include "IndexParameter.h"
 #include "knowhere/common/Config.h"
 

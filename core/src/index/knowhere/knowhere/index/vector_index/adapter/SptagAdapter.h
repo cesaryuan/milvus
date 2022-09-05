@@ -12,6 +12,7 @@
 #pragma once
 
 #include <SPTAG/AnnService/inc/Core/VectorIndex.h>
+
 #include <memory>
 #include <vector>
 

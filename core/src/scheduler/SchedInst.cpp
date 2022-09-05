@@ -10,15 +10,17 @@
 // or implied. See the License for the specific language governing permissions and limitations under the License.
 
 #include "scheduler/SchedInst.h"
-#include "ResourceFactory.h"
-#include "Utils.h"
-#include "config/Config.h"
 
 #include <fiu-local.h>
+
 #include <set>
 #include <string>
 #include <utility>
 #include <vector>
+
+#include "ResourceFactory.h"
+#include "Utils.h"
+#include "config/Config.h"
 
 namespace milvus {
 namespace scheduler {

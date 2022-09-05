@@ -16,6 +16,7 @@
 // under the License.
 
 #include "storage/oss/OSSIOWriter.h"
+
 #include "OSSClientWrapper.h"
 
 namespace milvus {

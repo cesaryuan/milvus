@@ -12,9 +12,9 @@
 #ifdef MILVUS_APU_VERSION
 #pragma once
 
-#include "Pass.h"
-
 #include <memory>
+
+#include "Pass.h"
 
 namespace milvus {
 namespace scheduler {

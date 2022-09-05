@@ -16,12 +16,13 @@
 // under the License.
 
 #include "server/delivery/request/CompactRequest.h"
+
+#include <memory>
+
 #include "server/DBWrapper.h"
 #include "utils/Log.h"
 #include "utils/TimeRecorder.h"
 #include "utils/ValidationUtil.h"
-
-#include <memory>
 
 namespace milvus {
 namespace server {

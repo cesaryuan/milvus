@@ -13,10 +13,9 @@
 
 #include <errno.h>
 #include <fcntl.h>
+#include <fiu-local.h>
 #include <string.h>
 #include <unistd.h>
-
-#include <fiu-local.h>
 
 #include "utils/Log.h"
 

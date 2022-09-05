@@ -11,10 +11,10 @@
 
 #pragma once
 
-#include "BaseRequest.h"
-
 #include <memory>
 #include <string>
+
+#include "BaseRequest.h"
 
 namespace milvus {
 namespace server {

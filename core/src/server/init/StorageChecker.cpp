@@ -11,12 +11,11 @@
 
 #include "server/init/StorageChecker.h"
 
+#include <fiu-local.h>
 #include <unistd.h>
 
 #include <string>
 #include <vector>
-
-#include <fiu-local.h>
 
 #include "config/Config.h"
 #include "utils/Log.h"

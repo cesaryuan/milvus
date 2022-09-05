@@ -11,9 +11,6 @@
 
 #include "scheduler/JobMgr.h"
 
-#include "src/db/Utils.h"
-#include "src/segment/SegmentReader.h"
-
 #include <limits>
 #include <utility>
 
@@ -23,6 +20,8 @@
 #include "scheduler/CPUBuilder.h"
 #include "scheduler/tasklabel/SpecResLabel.h"
 #include "selector/Optimizer.h"
+#include "src/db/Utils.h"
+#include "src/segment/SegmentReader.h"
 #include "task/Task.h"
 
 namespace milvus {

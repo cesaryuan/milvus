@@ -12,6 +12,7 @@
 #include <fiu-control.h>
 #include <fiu-local.h>
 #include <gtest/gtest.h>
+
 #include <memory>
 
 #include "knowhere/common/Exception.h"
@@ -26,7 +27,6 @@
 
 #include "knowhere/common/Timer.h"
 #include "knowhere/index/vector_index/impl/nsg/NSGIO.h"
-
 #include "unittest/utils.h"
 
 using ::testing::Combine;

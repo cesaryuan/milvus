@@ -11,10 +11,10 @@
 
 #pragma once
 
-#include "Resource.h"
-
 #include <string>
 #include <utility>
+
+#include "Resource.h"
 
 namespace milvus {
 namespace scheduler {

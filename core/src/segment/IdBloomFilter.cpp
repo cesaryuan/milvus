@@ -16,11 +16,12 @@
 // under the License.
 
 #include "segment/IdBloomFilter.h"
-#include "utils/Log.h"
-#include "utils/Status.h"
 
 #include <algorithm>
 #include <string>
+
+#include "utils/Log.h"
+#include "utils/Status.h"
 
 namespace milvus {
 namespace segment {

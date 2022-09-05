@@ -16,6 +16,7 @@
 // under the License.
 
 #include "storage/cos/COSIOWriter.h"
+
 #include "COSClientWrapper.h"
 
 namespace milvus {

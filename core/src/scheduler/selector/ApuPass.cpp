@@ -12,6 +12,7 @@
 #ifdef MILVUS_APU_VERSION
 
 #include "scheduler/selector/ApuPass.h"
+
 #include "scheduler/SchedInst.h"
 #include "scheduler/tasklabel/SpecResLabel.h"
 

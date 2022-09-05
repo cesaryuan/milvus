@@ -12,11 +12,11 @@
 #ifdef MILVUS_GPU_VERSION
 #include "server/init/GpuChecker.h"
 
+#include <fiu-local.h>
+
 #include <iostream>
 #include <set>
 #include <vector>
-
-#include <fiu-local.h>
 
 #include "config/Config.h"
 #include "utils/Log.h"

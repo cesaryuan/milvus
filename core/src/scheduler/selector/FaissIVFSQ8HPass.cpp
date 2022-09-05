@@ -10,6 +10,7 @@
 // or implied. See the License for the specific language governing permissions and limitations under the License.
 #ifdef MILVUS_GPU_VERSION
 #include "scheduler/selector/FaissIVFSQ8HPass.h"
+
 #include "cache/GpuCacheMgr.h"
 #include "config/Config.h"
 #include "knowhere/index/vector_index/helpers/IndexParameter.h"

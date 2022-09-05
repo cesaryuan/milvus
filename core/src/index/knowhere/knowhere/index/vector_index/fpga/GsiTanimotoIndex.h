@@ -12,11 +12,11 @@
 #ifdef MILVUS_APU_VERSION
 #pragma once
 
-#include "Apu.h"
-#include "GsiBaseIndex.h"
-
 #include <memory>
 #include <string>
+
+#include "Apu.h"
+#include "GsiBaseIndex.h"
 
 namespace milvus {
 namespace knowhere {

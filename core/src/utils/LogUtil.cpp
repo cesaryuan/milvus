@@ -13,11 +13,11 @@
 
 #include <fiu-local.h>
 #include <libgen.h>
+#include <yaml-cpp/yaml.h>
+
+#include <boost/filesystem.hpp>
 #include <cctype>
 #include <string>
-
-#include <yaml-cpp/yaml.h>
-#include <boost/filesystem.hpp>
 
 #include "config/Config.h"
 #include "utils/Log.h"

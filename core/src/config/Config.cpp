@@ -1520,7 +1520,6 @@ Config::CheckStorageConfigOSSBucket(const std::string& value) {
 
 #endif
 
-
 #ifdef MILVUS_WITH_COS
 
 Status
@@ -3291,7 +3290,6 @@ Config::SetStorageConfigOSSBucket(const std::string& value) {
 
 #endif
 
-
 #ifdef MILVUS_WITH_COS
 Status
 Config::SetStorageConfigCOSEnable(const std::string& value) {
@@ -3330,7 +3328,6 @@ Config::SetStorageConfigCOSDestDomain(const std::string& value) {
 }
 
 #endif
-
 
 /* metric config */
 Status

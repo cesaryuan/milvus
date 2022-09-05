@@ -34,6 +34,7 @@
 #include "knowhere/index/vector_index/adapter/VectorAdapter.h"
 #ifdef MILVUS_FPGA_VERSION
 #include <faiss/index_io.h>
+
 #include "knowhere/index/vector_index/IndexIVFPQ.h"
 #include "knowhere/index/vector_index/fpga/IndexFPGAIVFPQ.h"
 #include "knowhere/index/vector_index/fpga/utils.h"

@@ -10,13 +10,15 @@
 // or implied. See the License for the specific language governing permissions and limitations under the License.
 
 #include "unittest/utils.h"
-#include "knowhere/index/vector_index/adapter/VectorAdapter.h"
 
 #include <gtest/gtest.h>
 #include <math.h>
+
 #include <memory>
 #include <string>
 #include <utility>
+
+#include "knowhere/index/vector_index/adapter/VectorAdapter.h"
 
 INITIALIZE_EASYLOGGINGPP
 

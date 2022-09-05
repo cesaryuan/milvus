@@ -11,10 +11,9 @@
 
 #include <gtest/gtest.h>
 
+#include "Helper.h"
 #include "knowhere/common/Exception.h"
 #include "knowhere/index/vector_index/IndexBinaryIDMAP.h"
-
-#include "Helper.h"
 #include "unittest/utils.h"
 
 using ::testing::Combine;

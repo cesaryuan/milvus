@@ -13,10 +13,10 @@
 
 #pragma once
 
-#include <string>
-
 #include <cuda_runtime.h>
 #include <nvml.h>
+
+#include <string>
 
 #include "utils/Status.h"
 

@@ -11,13 +11,13 @@
 
 #include "server/web_impl/handler/WebRequestHandler.h"
 
+#include <fiu-local.h>
+
 #include <algorithm>
 #include <ctime>
 #include <string>
 #include <unordered_map>
 #include <vector>
-
-#include <fiu-local.h>
 
 #include "config/Config.h"
 #include "metrics/SystemInfo.h"

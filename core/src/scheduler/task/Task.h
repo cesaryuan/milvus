@@ -11,14 +11,14 @@
 
 #pragma once
 
+#include <memory>
+#include <string>
+#include <utility>
+
 #include "Path.h"
 #include "scheduler/job/Job.h"
 #include "scheduler/tasklabel/TaskLabel.h"
 #include "utils/Status.h"
-
-#include <memory>
-#include <string>
-#include <utility>
 
 namespace milvus {
 namespace scheduler {

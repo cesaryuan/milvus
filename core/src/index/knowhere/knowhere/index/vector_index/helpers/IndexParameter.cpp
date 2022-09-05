@@ -10,9 +10,10 @@
 // or implied. See the License for the specific language governing permissions and limitations under the License.
 
 #include "knowhere/index/vector_index/helpers/IndexParameter.h"
-#include "knowhere/common/Exception.h"
 
 #include <faiss/Index.h>
+
+#include "knowhere/common/Exception.h"
 
 namespace milvus {
 namespace knowhere {

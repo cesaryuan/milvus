@@ -9,11 +9,12 @@
 // is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
 // or implied. See the License for the specific language governing permissions and limitations under the License.
 
+#include "server/web_impl/WebServer.h"
+
 #include <chrono>
 #include <oatpp/network/server/Server.hpp>
 
 #include "config/Config.h"
-#include "server/web_impl/WebServer.h"
 #include "server/web_impl/controller/WebController.hpp"
 
 namespace milvus {

@@ -18,6 +18,7 @@
 #pragma once
 
 #include <cos_api.h>
+
 #include <memory>
 #include <string>
 #include <vector>

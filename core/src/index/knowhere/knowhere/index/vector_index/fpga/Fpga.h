@@ -14,6 +14,7 @@
 
 #include <faiss/IndexFlat.h>
 #include <faiss/IndexIVFPQ.h>
+
 #include <cstdint>
 #include <cstdio>
 #include <iostream>

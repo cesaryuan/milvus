@@ -10,15 +10,16 @@
 // or implied. See the License for the specific language governing permissions and limitations under the License.
 
 #include "scheduler/TaskTable.h"
+
+#include <ctime>
+#include <sstream>
+#include <vector>
+
 #include "Utils.h"
 #include "event/TaskTableUpdatedEvent.h"
 #include "scheduler/SchedInst.h"
 #include "utils/Log.h"
 #include "utils/TimeRecorder.h"
-
-#include <ctime>
-#include <sstream>
-#include <vector>
 
 namespace milvus {
 namespace scheduler {

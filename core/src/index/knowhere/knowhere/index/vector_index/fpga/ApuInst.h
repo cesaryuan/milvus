@@ -14,6 +14,7 @@
 
 #include <memory>
 #include <mutex>
+
 #include "Apu.h"
 
 namespace Fpga {

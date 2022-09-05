@@ -19,6 +19,7 @@
 
 #include <memory>
 #include <string>
+
 #include "knowhere/index/vector_index/VecIndex.h"
 
 namespace milvus {

@@ -10,10 +10,11 @@
 // or implied. See the License for the specific language governing permissions and limitations under the License.
 
 #include "db/merge/MergeAdaptiveStrategy.h"
-#include "utils/Log.h"
 
 #include <algorithm>
 #include <vector>
+
+#include "utils/Log.h"
 
 namespace milvus {
 namespace engine {

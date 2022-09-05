@@ -9,14 +9,13 @@
 // is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
 // or implied. See the License for the specific language governing permissions and limitations under the License.
 
-#include <gtest/gtest.h>
-
 #include <faiss/AutoTune.h>
 #include <faiss/Index.h>
 #include <faiss/gpu/GpuAutoTune.h>
 #include <faiss/gpu/GpuIndexIVFFlat.h>
 #include <faiss/gpu/StandardGpuResources.h>
 #include <faiss/index_io.h>
+#include <gtest/gtest.h>
 
 #include <chrono>
 #include <iostream>

@@ -11,12 +11,12 @@
 
 #pragma once
 
+#include <faiss/gpu/StandardGpuResources.h>
+
 #include <map>
 #include <memory>
 #include <mutex>
 #include <utility>
-
-#include <faiss/gpu/StandardGpuResources.h>
 
 #include "src/utils/BlockingQueue.h"
 

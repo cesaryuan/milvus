@@ -9,11 +9,13 @@
 // is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
 // or implied. See the License for the specific language governing permissions and limitations under the License
 
+#include "knowhere/common/Exception.h"
+
 #include <string.h>
+
 #include <cstdio>
 
 #include "Log.h"
-#include "knowhere/common/Exception.h"
 
 namespace milvus {
 namespace knowhere {

@@ -11,11 +11,11 @@
 
 #pragma once
 
-#include "easyloggingpp/easylogging++.h"
-#include "utils/Status.h"
-
 #include <sstream>
 #include <string>
+
+#include "easyloggingpp/easylogging++.h"
+#include "utils/Status.h"
 
 namespace milvus {
 namespace server {

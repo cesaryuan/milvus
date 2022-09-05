@@ -11,9 +11,9 @@
 
 #include "server/delivery/request/SearchRequest.h"
 
-#include <memory>
-
 #include <fiu-local.h>
+
+#include <memory>
 
 #include "db/Utils.h"
 #include "server/DBWrapper.h"

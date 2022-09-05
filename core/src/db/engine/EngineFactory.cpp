@@ -10,10 +10,11 @@
 // or implied. See the License for the specific language governing permissions and limitations under the License.
 
 #include "db/engine/EngineFactory.h"
-#include "db/engine/ExecutionEngineImpl.h"
-#include "utils/Log.h"
 
 #include <memory>
+
+#include "db/engine/ExecutionEngineImpl.h"
+#include "utils/Log.h"
 
 namespace milvus {
 namespace engine {

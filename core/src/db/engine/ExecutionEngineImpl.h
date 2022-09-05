@@ -11,9 +11,6 @@
 
 #pragma once
 
-#include "segment/SegmentReader.h"
-#include "utils/Json.h"
-
 #include <memory>
 #include <string>
 #include <unordered_map>
@@ -21,6 +18,8 @@
 
 #include "ExecutionEngine.h"
 #include "knowhere/index/vector_index/VecIndex.h"
+#include "segment/SegmentReader.h"
+#include "utils/Json.h"
 
 namespace milvus {
 namespace engine {

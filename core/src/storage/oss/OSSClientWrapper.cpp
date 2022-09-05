@@ -18,6 +18,7 @@
 #include "storage/oss/OSSClientWrapper.h"
 
 #include <alibabacloud/oss/OssClient.h>
+
 #include <fstream>
 #include <iostream>
 #include <memory>
@@ -64,7 +65,7 @@ OSSClientWrapper::CreateBucket() {
     if (!outcome.isSuccess()) {
         const auto& err = outcome.error();
         if (err.Code() != "BucketAlreadyExists") {
-            LOG_STORAGE_ERROR_ << "ERROR: CreateBucket: " << err.Code() << ": " << err.Message();
+            LOG_STORAGE_WARNING_ << "ERROR: CreateBucket: " << err.Code() << ": " << err.Message();
             return Status(SERVER_UNEXPECTED_ERROR, err.Message());
         }
     }

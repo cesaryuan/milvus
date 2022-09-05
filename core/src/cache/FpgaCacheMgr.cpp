@@ -12,9 +12,9 @@
 #ifdef MILVUS_FPGA_VERSION
 #include "cache/FpgaCacheMgr.h"
 
-#include <utility>
-
 #include <fiu-local.h>
+
+#include <utility>
 
 #include "config/Config.h"
 #include "utils/Log.h"

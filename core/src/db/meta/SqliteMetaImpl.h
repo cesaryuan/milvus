@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include <sqlite3.h>
+
 #include <mutex>
 #include <set>
 #include <string>
@@ -19,8 +21,6 @@
 
 #include "Meta.h"
 #include "db/Options.h"
-
-#include <sqlite3.h>
 
 namespace milvus {
 namespace engine {

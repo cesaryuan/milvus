@@ -10,13 +10,15 @@
 // or implied. See the License for the specific language governing permissions and limitations under the License.
 
 #include "db/IDGenerator.h"
-#include "utils/Log.h"
 
 #include <assert.h>
 #include <fiu-local.h>
+
 #include <chrono>
 #include <iostream>
 #include <string>
+
+#include "utils/Log.h"
 
 namespace milvus {
 namespace engine {

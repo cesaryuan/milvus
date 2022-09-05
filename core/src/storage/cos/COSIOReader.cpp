@@ -16,7 +16,9 @@
 // under the License.
 
 #include "storage/cos/COSIOReader.h"
+
 #include <cstring>
+
 #include "COSClientWrapper.h"
 
 namespace milvus {

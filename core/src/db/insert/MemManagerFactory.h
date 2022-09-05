@@ -11,10 +11,10 @@
 
 #pragma once
 
+#include <memory>
+
 #include "MemManager.h"
 #include "db/meta/Meta.h"
-
-#include <memory>
 
 namespace milvus {
 namespace engine {

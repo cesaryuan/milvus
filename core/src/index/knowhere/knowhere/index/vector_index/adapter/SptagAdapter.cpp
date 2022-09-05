@@ -10,6 +10,7 @@
 // or implied. See the License for the specific language governing permissions and limitations under the License.
 
 #include "knowhere/index/vector_index/adapter/SptagAdapter.h"
+
 #include "knowhere/index/vector_index/adapter/VectorAdapter.h"
 
 namespace milvus {

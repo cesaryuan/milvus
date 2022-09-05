@@ -23,6 +23,7 @@
 #endif
 
 #include <fiu-local.h>
+
 #include <algorithm>
 #include <chrono>
 #include <memory>

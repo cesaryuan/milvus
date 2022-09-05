@@ -11,9 +11,9 @@
 
 #pragma once
 
-#include "utils/Error.h"
-
 #include <string>
+
+#include "utils/Error.h"
 
 namespace milvus {
 

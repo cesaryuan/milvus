@@ -11,11 +11,11 @@
 
 #pragma once
 
+#include <faiss/IndexIVF.h>
+
 #include <memory>
 #include <utility>
 #include <vector>
-
-#include <faiss/IndexIVF.h>
 
 #include "knowhere/common/Typedef.h"
 #include "knowhere/index/vector_index/FaissBaseIndex.h"

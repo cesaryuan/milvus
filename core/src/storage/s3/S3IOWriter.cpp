@@ -10,6 +10,7 @@
 // or implied. See the License for the specific language governing permissions and limitations under the License.
 
 #include "storage/s3/S3IOWriter.h"
+
 #include "storage/s3/S3ClientWrapper.h"
 
 namespace milvus {

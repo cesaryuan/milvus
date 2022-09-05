@@ -13,6 +13,7 @@
 
 #include <memory>
 #include <string>
+
 #include "server/delivery/request/BaseRequest.h"
 
 namespace milvus {

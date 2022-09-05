@@ -11,10 +11,10 @@
 
 #pragma once
 
-#include "db/engine/ExecutionEngine.h"
-
 #include <string>
 #include <unordered_map>
+
+#include "db/engine/ExecutionEngine.h"
 
 namespace milvus {
 namespace server {

@@ -10,14 +10,16 @@
 // or implied. See the License for the specific language governing permissions and limitations under the License.
 
 #include "server/delivery/request/ShowCollectionsRequest.h"
-#include "server/DBWrapper.h"
-#include "utils/Log.h"
-#include "utils/TimeRecorder.h"
 
 #include <fiu-local.h>
+
 #include <memory>
 #include <string>
 #include <vector>
+
+#include "server/DBWrapper.h"
+#include "utils/Log.h"
+#include "utils/TimeRecorder.h"
 
 namespace milvus {
 namespace server {

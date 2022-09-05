@@ -12,6 +12,7 @@
 #pragma once
 
 #include <faiss/utils/ConcurrentBitset.h>
+
 #include <memory>
 #include <mutex>
 #include <utility>

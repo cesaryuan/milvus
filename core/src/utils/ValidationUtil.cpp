@@ -10,6 +10,10 @@
 // or implied. See the License for the specific language governing permissions and limitations under the License.
 
 #include "utils/ValidationUtil.h"
+
+#include <arpa/inet.h>
+#include <netdb.h>
+
 #include "Log.h"
 #include "db/Types.h"
 #include "db/Utils.h"
@@ -18,9 +22,6 @@
 #include "knowhere/index/vector_index/helpers/IndexParameter.h"
 #include "utils/StringHelpFunctions.h"
 
-#include <arpa/inet.h>
-#include <netdb.h>
-
 #ifdef MILVUS_GPU_VERSION
 
 #include <cuda_runtime.h>
@@ -28,6 +29,7 @@
 #endif
 
 #include <fiu-local.h>
+
 #include <algorithm>
 #include <cmath>
 #include <limits>

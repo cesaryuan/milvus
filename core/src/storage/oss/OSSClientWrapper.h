@@ -18,6 +18,7 @@
 #pragma once
 
 #include <alibabacloud/oss/OssClient.h>
+
 #include <memory>
 #include <string>
 #include <vector>

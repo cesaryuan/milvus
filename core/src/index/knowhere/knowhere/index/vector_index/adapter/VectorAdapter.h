@@ -12,6 +12,7 @@
 #pragma once
 
 #include <string>
+
 #include "knowhere/common/Dataset.h"
 #include "knowhere/index/vector_index/helpers/IndexParameter.h"
 

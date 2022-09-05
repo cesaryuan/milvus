@@ -19,6 +19,7 @@
 
 #include <memory>
 #include <string>
+
 #include "storage/IOReader.h"
 
 namespace milvus {

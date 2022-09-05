@@ -16,13 +16,14 @@
 // under the License.
 
 #include "server/delivery/request/GetVectorIDsRequest.h"
+
+#include <memory>
+#include <vector>
+
 #include "server/DBWrapper.h"
 #include "utils/Log.h"
 #include "utils/TimeRecorder.h"
 #include "utils/ValidationUtil.h"
-
-#include <memory>
-#include <vector>
 
 namespace milvus {
 namespace server {

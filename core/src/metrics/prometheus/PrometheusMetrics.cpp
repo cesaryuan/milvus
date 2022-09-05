@@ -10,14 +10,16 @@
 // or implied. See the License for the specific language governing permissions and limitations under the License.
 
 #include "metrics/prometheus/PrometheusMetrics.h"
+
+#include <unistd.h>
+
+#include <string>
+#include <utility>
+
 #include "cache/GpuCacheMgr.h"
 #include "config/Config.h"
 #include "metrics/SystemInfo.h"
 #include "utils/Log.h"
-
-#include <unistd.h>
-#include <string>
-#include <utility>
 
 namespace milvus {
 namespace server {

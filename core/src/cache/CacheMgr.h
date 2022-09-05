@@ -11,12 +11,12 @@
 
 #pragma once
 
+#include <memory>
+#include <string>
+
 #include "Cache.h"
 #include "metrics/Metrics.h"
 #include "utils/Log.h"
-
-#include <memory>
-#include <string>
 
 namespace milvus {
 namespace cache {

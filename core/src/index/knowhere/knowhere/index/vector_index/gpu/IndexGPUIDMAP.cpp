@@ -17,6 +17,7 @@
 #include <faiss/gpu/GpuCloner.h>
 #endif
 #include <fiu-local.h>
+
 #include <string>
 
 #include "knowhere/common/Exception.h"

@@ -12,9 +12,8 @@
 #ifndef UTILIS_H
 #define UTILIS_H
 
-#include <iostream>
-
 #include <algorithm>
+#include <iostream>
 #include <numeric>
 #include <set>
 #include <vector>

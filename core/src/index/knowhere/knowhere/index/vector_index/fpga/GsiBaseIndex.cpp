@@ -10,8 +10,10 @@
 // or implied. See the License for the specific language governing permissions and limitations under the License.
 
 #include "knowhere/index/vector_index/fpga/GsiBaseIndex.h"
+
 #include <scheduler/job/SearchJob.h>
 #include <scheduler/task/SearchTask.h>
+
 #include <fstream>
 
 namespace milvus {

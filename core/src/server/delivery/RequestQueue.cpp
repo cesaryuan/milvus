@@ -10,14 +10,16 @@
 // or implied. See the License for the specific language governing permissions and limitations under the License.
 
 #include "server/delivery/RequestQueue.h"
-#include "server/delivery/strategy/RequestStrategy.h"
-#include "server/delivery/strategy/SearchReqStrategy.h"
-#include "utils/Log.h"
 
 #include <fiu-local.h>
 #include <unistd.h>
+
 #include <queue>
 #include <utility>
+
+#include "server/delivery/strategy/RequestStrategy.h"
+#include "server/delivery/strategy/SearchReqStrategy.h"
+#include "utils/Log.h"
 
 namespace milvus {
 namespace server {

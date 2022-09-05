@@ -10,14 +10,16 @@
 // or implied. See the License for the specific language governing permissions and limitations under the License.
 
 #include "db/Options.h"
-#include <fiu-local.h>
-#include <limits>
-#include "utils/Exception.h"
-#include "utils/Log.h"
 
 #include <assert.h>
+#include <fiu-local.h>
 #include <stdlib.h>
+
 #include <boost/algorithm/string.hpp>
+#include <limits>
+
+#include "utils/Exception.h"
+#include "utils/Log.h"
 
 namespace milvus {
 namespace engine {

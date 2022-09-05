@@ -10,16 +10,19 @@
 // or implied. See the License for the specific language governing permissions and limitations under the License.
 
 #include "server/Server.h"
-#include "server/init/InstanceLockCheck.h"
 
 #include <fcntl.h>
 #include <unistd.h>
+
 #include <boost/filesystem.hpp>
 #include <cstring>
 #include <unordered_map>
 
+#include "server/init/InstanceLockCheck.h"
+
 #ifdef MILVUS_GPU_VERSION
 #include <vector>
+
 #include "src/cache/GpuCacheMgr.h"
 #endif
 

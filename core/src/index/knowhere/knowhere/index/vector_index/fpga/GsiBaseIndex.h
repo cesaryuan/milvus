@@ -12,11 +12,11 @@
 #ifdef MILVUS_APU_VERSION
 #pragma once
 
+#include <string>
+
 #include "index/knowhere/knowhere/index/vector_index/VecIndex.h"
 #include "knowhere/index/vector_index/helpers/IndexParameter.h"
 #include "scheduler/task/Task.h"
-
-#include <string>
 
 extern "C" {
 #include <gsi/libgdl.h>

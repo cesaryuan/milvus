@@ -11,9 +11,9 @@
 
 #pragma once
 
-#include "scheduler/task/Task.h"
-
 #include <memory>
+
+#include "scheduler/task/Task.h"
 
 namespace milvus::scheduler {
 

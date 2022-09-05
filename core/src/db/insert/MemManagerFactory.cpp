@@ -10,17 +10,19 @@
 // or implied. See the License for the specific language governing permissions and limitations under the License.
 
 #include "db/insert/MemManagerFactory.h"
-#include "MemManagerImpl.h"
-#include "utils/Exception.h"
-#include "utils/Log.h"
 
 #include <stdlib.h>
 #include <time.h>
+
 #include <cstdlib>
 #include <memory>
 #include <regex>
 #include <sstream>
 #include <string>
+
+#include "MemManagerImpl.h"
+#include "utils/Exception.h"
+#include "utils/Log.h"
 
 namespace milvus {
 namespace engine {

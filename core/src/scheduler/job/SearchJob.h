@@ -25,9 +25,7 @@
 #include "Job.h"
 #include "db/Types.h"
 #include "db/meta/MetaTypes.h"
-
 #include "query/GeneralQuery.h"
-
 #include "server/context/Context.h"
 
 namespace milvus {

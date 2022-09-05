@@ -11,13 +11,13 @@
 
 #pragma once
 
-#include "db/Types.h"
-#include "meta/Meta.h"
-#include "utils/Status.h"
-
 #include <map>
 #include <mutex>
 #include <string>
+
+#include "db/Types.h"
+#include "meta/Meta.h"
+#include "utils/Status.h"
 
 namespace milvus {
 namespace engine {

@@ -10,6 +10,7 @@
 // or implied. See the License for the specific language governing permissions and limitations under the License.
 
 #include "knowhere/index/vector_index/fpga/GsiTanimotoIndex.h"
+
 #include "ApuInst.h"
 #include "scheduler/task/SearchTask.h"
 

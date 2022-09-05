@@ -12,6 +12,7 @@
 #include <fiu-control.h>
 #include <fiu-local.h>
 #include <gtest/gtest.h>
+
 #include <thread>
 
 #include "knowhere/common/Timer.h"

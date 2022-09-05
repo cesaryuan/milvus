@@ -10,15 +10,12 @@
 // or implied. See the License for the specific language governing permissions and limitations under the License.
 
 #include "utils/CommonUtil.h"
+
 #include "cache/CpuCacheMgr.h"
 #include "cache/GpuCacheMgr.h"
 #ifdef MILVUS_FPGA_VERSION
 #include "cache/FpgaCacheMgr.h"
 #endif
-#include "config/Config.h"
-#include "db/Utils.h"
-#include "utils/Log.h"
-
 #include <dirent.h>
 #include <pwd.h>
 #include <string.h>
@@ -26,11 +23,15 @@
 #include <sys/sysinfo.h>
 #include <time.h>
 #include <unistd.h>
+
 #include <iostream>
 #include <thread>
 #include <vector>
 
 #include "boost/filesystem.hpp"
+#include "config/Config.h"
+#include "db/Utils.h"
+#include "utils/Log.h"
 
 #if defined(__x86_64__)
 #define THREAD_MULTIPLY_CPU 1

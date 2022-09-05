@@ -12,6 +12,7 @@
 #pragma once
 
 #include <string.h>
+
 #include <map>
 #include <memory>
 #include <string>
