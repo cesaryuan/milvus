@@ -126,7 +126,7 @@ OSSClientWrapper::PutObjectStr(const std::string& object_name, const std::string
 }
 
 Status
-OSSClientWrapper::GetObjectFile(const std::string& object_name, const std::string& file_path) {
+OSSClientWrapper::GetObjectFile(const std::string& object_name, const std::string& file_path, bool may_not_exists) {
     AlibabaCloud::OSS::GetObjectRequest request(oss_bucket_, normalize_object_name(object_name));
     request.setResponseStreamFactory([=]() {
         return std::make_shared<std::fstream>(
@@ -136,7 +136,9 @@ OSSClientWrapper::GetObjectFile(const std::string& object_name, const std::strin
     const auto outcome = client_ptr_->GetObject(request);
     if (!outcome.isSuccess()) {
         const auto& err = outcome.error();
-        LOG_STORAGE_WARNING_ << "ERROR: GetObjectFile: " << object_name << ", " << err.Code() << ": " << err.Message();
+        if (! may_not_exists) {
+            LOG_STORAGE_WARNING_ << "ERROR: GetObjectFile: " << object_name << ", " << err.Code() << ": " << err.Message();
+        }
         return Status(SERVER_UNEXPECTED_ERROR, err.Message());
     }
 

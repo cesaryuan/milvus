@@ -1,0 +1,1 @@
+FROM matrixji/milvus-gpu-build-env:v1-20220508

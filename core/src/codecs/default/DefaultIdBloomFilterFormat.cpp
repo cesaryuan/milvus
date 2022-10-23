@@ -48,7 +48,7 @@ DefaultIdBloomFilterFormat::read(const storage::FSHandlerPtr& fs_ptr, segment::I
     const std::string bloom_filter_file_path = dir_path + "/" + bloom_filter_filename_;
     scaling_bloom_t* bloom_filter{nullptr};
     do {
-        if (!fs_ptr->operation_ptr_->CacheGet(bloom_filter_file_path)) {
+        if (!fs_ptr->operation_ptr_->CacheGet(bloom_filter_file_path, true)) {
             LOG_ENGINE_ERROR_ << "Fail to cache get bloom filter: " << bloom_filter_file_path;
             break;
         }
@@ -103,7 +103,7 @@ DefaultIdBloomFilterFormat::write(const storage::FSHandlerPtr& fs_ptr,
     const std::string bloom_filter_file_path = dir_path + "/" + bloom_filter_filename_;
     const std::string temp_bloom_filter_file_path = dir_path + "/" + "temp_bloom";
 
-    fs_ptr->operation_ptr_->CacheGet(bloom_filter_file_path);
+    fs_ptr->operation_ptr_->CacheGet(bloom_filter_file_path, true);
 
     bool exists = boost::filesystem::exists(bloom_filter_file_path);
     const std::string* file_path = exists ? &temp_bloom_filter_file_path : &bloom_filter_file_path;

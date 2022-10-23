@@ -43,7 +43,7 @@ class DiskOperation : public Operation {
     DeleteFile(const std::string& file_path) final;
 
     bool
-    CacheGet(const std::string& file_path) final;
+    CacheGet(const std::string& file_path, bool may_not_exists) final;
 
     bool
     CachePut(const std::string& file_path) final;

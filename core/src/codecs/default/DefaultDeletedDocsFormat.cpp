@@ -41,7 +41,7 @@ DefaultDeletedDocsFormat::read(const storage::FSHandlerPtr& fs_ptr, segment::Del
 
     auto& dir_path = fs_ptr->operation_ptr_->GetDirectory();
     const std::string del_file_path = dir_path + "/" + deleted_docs_filename_;
-    fs_ptr->operation_ptr_->CacheGet(del_file_path);
+    fs_ptr->operation_ptr_->CacheGet(del_file_path, true);
 
     int del_fd = open(del_file_path.c_str(), O_RDONLY, 00664);
     if (del_fd == -1) {
@@ -82,7 +82,7 @@ DefaultDeletedDocsFormat::write(const storage::FSHandlerPtr& fs_ptr, const segme
     const std::string del_file_path = dir_path + "/" + deleted_docs_filename_;
     const std::string temp_path = dir_path + "/" + "temp_del";
 
-    fs_ptr->operation_ptr_->CacheGet(del_file_path);
+    fs_ptr->operation_ptr_->CacheGet(del_file_path, true);
 
     // if exist write to the temp file, in order to avoid possible race condition with search
     bool exists = boost::filesystem::exists(del_file_path);
@@ -130,7 +130,7 @@ DefaultDeletedDocsFormat::readSize(const storage::FSHandlerPtr& fs_ptr, size_t& 
 
     auto& dir_path = fs_ptr->operation_ptr_->GetDirectory();
     const std::string del_file_path = dir_path + "/" + deleted_docs_filename_;
-    fs_ptr->operation_ptr_->CacheGet(del_file_path);
+    fs_ptr->operation_ptr_->CacheGet(del_file_path, true);
 
     int del_fd = open(del_file_path.c_str(), O_RDONLY, 00664);
     if (del_fd == -1) {

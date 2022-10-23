@@ -48,8 +48,8 @@ OSSOperation::DeleteFile(const std::string& file_path) {
 }
 
 bool
-OSSOperation::CacheGet(const std::string& file_path) {
-    return OSSClientWrapper::GetInstance().GetObjectFile(file_path, file_path).ok();
+OSSOperation::CacheGet(const std::string& file_path, bool may_not_exists) {
+    return OSSClientWrapper::GetInstance().GetObjectFile(file_path, file_path, may_not_exists).ok();
 }
 
 bool

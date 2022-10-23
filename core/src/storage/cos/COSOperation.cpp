@@ -48,8 +48,8 @@ COSOperation::DeleteFile(const std::string& file_path) {
 }
 
 bool
-COSOperation::CacheGet(const std::string& file_path) {
-    return COSClientWrapper::GetInstance().GetObjectFile(file_path, file_path).ok();
+COSOperation::CacheGet(const std::string& file_path, bool may_not_exists) {
+    return COSClientWrapper::GetInstance().GetObjectFile(file_path, file_path, may_not_exists).ok();
 }
 
 bool

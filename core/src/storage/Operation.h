@@ -39,7 +39,7 @@ class Operation {
     DeleteFile(const std::string& file_path) = 0;
 
     virtual bool
-    CacheGet(const std::string& file_path) = 0;
+    CacheGet(const std::string& file_path, bool may_not_exists) = 0;
 
     virtual bool
     CachePut(const std::string& file_path) = 0;

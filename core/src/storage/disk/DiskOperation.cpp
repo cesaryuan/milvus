@@ -69,7 +69,7 @@ DiskOperation::DeleteFile(const std::string& file_path) {
 }
 
 bool
-DiskOperation::CacheGet(const std::string& /* unused file_path */) {
+DiskOperation::CacheGet(const std::string&, bool) {
     return true;
 }
 

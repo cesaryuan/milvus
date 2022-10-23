@@ -58,7 +58,7 @@ class COSClientWrapper {
     Status
     PutObjectStr(const std::string& object_key, const std::string& content);
     Status
-    GetObjectFile(const std::string& object_key, const std::string& file_path);
+    GetObjectFile(const std::string& object_key, const std::string& file_path, bool may_not_exists=false);
     Status
     GetObjectStr(const std::string& object_key, std::string& content);
     Status

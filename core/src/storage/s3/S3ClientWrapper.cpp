@@ -186,7 +186,7 @@ S3ClientWrapper::PutObjectStr(const std::string& object_name, const std::string&
 }
 
 Status
-S3ClientWrapper::GetObjectFile(const std::string& object_name, const std::string& file_path) {
+S3ClientWrapper::GetObjectFile(const std::string& object_name, const std::string& file_path, bool may_not_exists) {
     Aws::S3::Model::GetObjectRequest request;
     request.WithBucket(s3_bucket_).WithKey(object_name);
 
@@ -195,7 +195,9 @@ S3ClientWrapper::GetObjectFile(const std::string& object_name, const std::string
     fiu_do_on("S3ClientWrapper.GetObjectFile.outcome.fail", outcome = Aws::S3::Model::GetObjectOutcome());
     if (!outcome.IsSuccess()) {
         auto err = outcome.GetError();
-        LOG_STORAGE_WARNING_ << "ERROR: GetObject: " << err.GetExceptionName() << ": " << err.GetMessage();
+        if (! may_not_exists) {
+            LOG_STORAGE_WARNING_ << "ERROR: GetObject: " << err.GetExceptionName() << ": " << err.GetMessage();
+        }
         return Status(SERVER_UNEXPECTED_ERROR, err.GetMessage());
     }
 

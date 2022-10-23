@@ -42,8 +42,8 @@ S3Operation::DeleteFile(const std::string& file_path) {
 }
 
 bool
-S3Operation::CacheGet(const std::string& file_path) {
-    return S3ClientWrapper::GetInstance().GetObjectFile(file_path, file_path).ok();
+S3Operation::CacheGet(const std::string& file_path, bool may_not_exists) {
+    return S3ClientWrapper::GetInstance().GetObjectFile(file_path, file_path, may_not_exists).ok();
 }
 
 bool

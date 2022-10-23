@@ -67,8 +67,9 @@ COSClientWrapper::CreateBucket() {
 
     const auto result = client_ptr_->PutBucket(request, &response);
     if (!result.IsSucc()) {
-        if (result.GetErrorCode() != "BucketAlreadyExists") {
-            LOG_STORAGE_WARNING_ << "ERROR: CreateBucket: " << result.GetErrorCode() << ": " << result.GetErrorMsg();
+        const auto &error_code = result.GetErrorCode();
+        if (error_code != "BucketAlreadyExists" && error_code != "BucketAlreadyOwnedByYou") {
+            LOG_STORAGE_ERROR_ << "ERROR: CreateBucket: " << error_code << ": " << result.GetErrorMsg();
             return Status(SERVER_UNEXPECTED_ERROR, result.GetErrorMsg());
         }
     }
@@ -135,7 +136,7 @@ COSClientWrapper::PutObjectStr(const std::string& object_name, const std::string
 }
 
 Status
-COSClientWrapper::GetObjectFile(const std::string& object_name, const std::string& file_path) {
+COSClientWrapper::GetObjectFile(const std::string& object_name, const std::string& file_path, bool may_not_exists) {
     auto stream = std::make_shared<std::fstream>(
         file_path, std::ios_base::out | std::ios_base::in | std::ios_base::trunc | std::ios_base::binary);
     qcloud_cos::GetObjectByStreamReq request(cos_bucket_, normalize_object_name(object_name), *stream);
@@ -143,8 +144,10 @@ COSClientWrapper::GetObjectFile(const std::string& object_name, const std::strin
 
     const auto result = client_ptr_->GetObject(request, &response);
     if (!result.IsSucc()) {
-        LOG_STORAGE_WARNING_ << "ERROR: GetObjectFile: " << object_name << ", " << result.GetErrorCode() << ": "
-                             << result.GetErrorMsg();
+        if (! may_not_exists) {
+            LOG_STORAGE_WARNING_ << "ERROR: GetObjectFile: " << object_name << ", " << result.GetErrorCode() << ": "
+                                 << result.GetErrorMsg();
+        }
         return Status(SERVER_UNEXPECTED_ERROR, result.GetErrorMsg());
     }
 
