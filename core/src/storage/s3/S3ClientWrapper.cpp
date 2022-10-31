@@ -69,7 +69,7 @@ S3ClientWrapper::StartService() {
     }
     client_ptr_ =
         std::make_shared<Aws::S3::S3Client>(Aws::Auth::AWSCredentials(s3_access_key_, s3_secret_key_), cfg,
-                                            Aws::Client::AWSAuthV4Signer::PayloadSigningPolicy::Always, false);
+                                            Aws::Client::AWSAuthV4Signer::PayloadSigningPolicy::Never, false);
 
     bool mock_enable = false;
     fiu_do_on("S3ClientWrapper.StartService.mock_enable", mock_enable = true);
